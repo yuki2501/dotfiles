@@ -47,7 +47,7 @@ mac_python:
 	@brew install python3
 mac_zsh:
 	@brew install zsh
-	@chsh -s /usr/local/bin/zsh
+	@sudo chsh -s /usr/local/bin/zsh
 	@echo "Default zsh is zsh from brew!"
 mac_haskell:
 	@brew install haskell-stack hlint
