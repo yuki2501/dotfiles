@@ -17,8 +17,7 @@ let g:xdg_data_home   = !empty($XDG_DATA_HOME)
 set shell=/bin/sh
 " Indent
 set tabstop=4
-set shiftwidth=4
-set softtabstop=4
+set shiftwidth=4 set softtabstop=4
 set expandtab
 set smartindent
 " Split
@@ -38,10 +37,10 @@ set mouse=a
 " Automatically wrap left and right
 set whichwrap=b,s,h,l,<,>,[,]
 "clipboard config for win
-nnoremap <silent> <Space>y :.w !win32yank.exe -i<CR><CR>
-vnoremap <silent> <Space>y :w !win32yank.exe -i<CR><CR>
-nnoremap <silent> <Space>p :r !win32yank.exe -o<CR>
-vnoremap <silent> <Space>p :r !win32yank.exe -o<CR>
+"nnoremap <silent> <Space>y :.w !win32yank.exe -i<CR><CR>
+"vnoremap <silent> <Space>y :w !win32yank.exe -i<CR><CR>
+"nnoremap <silent> <Space>p :r !win32yank.exe -o<CR>
+"vnoremap <silent> <Space>p :r !win32yank.exe -o<CR>
 "clipboard config for mac
 "set clipboard = unnamedplus
 nnoremap sj <C-w>j
@@ -52,16 +51,31 @@ nnoremap sJ <C-w>J
 nnoremap sK <C-w>K
 nnoremap sL <C-w>L
 nnoremap sH <C-w>H
-
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-map <Leader>lk :call LanguageClient#textDocument_hover()<CR>
-map <Leader>lg :call LanguageClient#textDocument_definition()<CR>
-map <Leader>lr :call LanguageClient#textDocument_rename()<CR>
-map <Leader>lf :call LanguageClient#textDocument_formatting()<CR>
-map <Leader>lb :call LanguageClient#textDocument_references()<CR>
-map <Leader>la :call LanguageClient#textDocument_codeAction()<CR>
-map <Leader>ls :call LanguageClient#textDocument_documentSymbol()<CR>
 """ Plugin """
 " dein.vim
 " Repo: https://github.com/Shougo/dein.vim
 exec 'source' g:xdg_config_home . '/nvim/plugin/dein/dein.vim'
+
+"config for vimtex
+let g:vimtex_fold_envs = 0
+let g:vimtex_view_general_viewer = 'displayline'
+let g:vimtex_view_general_options = '-r @line @pdf @tex'
+let g:vimtex_compiler_latexmk = {
+      \ 'options' : [
+      \   '-verbose',
+      \   '-file-line-error',
+      \   '-synctex=1',
+      \   '-interaction=nonstopmode',
+      \ ]}
+let mapleader = ";"
+let maplocalleader = ","
+inoremap <silent> jj <ESC>
+let g:tmuxline_preset = {
+  \'a'    : '#S',
+  \'c'    : ['#(whoami)', '#(uptime | cud -d " " -f 1,2,3)'],
+  \'win'  : ['#I', '#W'],
+  \'cwin' : ['#I', '#W', '#F'],
+  \'x'    : '#(date)',
+  \'y'    : ['%R', '%a', '%Y'],
+  \'z'    : '#H'}
+let g:tmuxline_theme = 'solarized'

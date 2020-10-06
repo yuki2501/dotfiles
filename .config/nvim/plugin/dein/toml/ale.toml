@@ -29,4 +29,8 @@ let g:ale_fixers = {
     \ '*':               ['remove_trailing_lines', 'trim_whitespace'],
 \ }
 let g:ale_fix_on_save = 1
+hi link ALEError Error
+hi Warning term=underline cterm=underline ctermfg=Yellow gui=undercurl guisp=Gold
+hi link ALEWarning Warning
+hi link ALEInfo SpellCap
 '''

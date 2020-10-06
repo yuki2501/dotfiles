@@ -1,0 +1,32 @@
+{
+  "suggest.timeout": 500,
+  "explorer.icon.enableNerdfont": true,
+  "explorer.icon.enableVimDevicons": true,
+  "explorer.file.showHiddenFiles": true,
+  "yaml.format.enable": true,
+  "git.addGBlameToBufferVar": true,
+  "coc.preferences.formatOnSaveFiletypes": [
+    "Haskell"],
+  "cSpell.enabledLanguageIds": [
+    "git-commit",
+    "gina-commit",
+    "latex",
+    "markdown",
+    "plaintext",
+    "text"
+  ],
+  "coc.preferences.diagnostic.displayByAle": true,
+  "languageserver": {
+    "haskell": {
+      "command": "haskell-language-server-wrapper",
+      "args": ["--lsp"],
+      "rootPatterns": ["*.cabal", "stack.yaml", "cabal.project", "package.yaml"],
+      "filetypes": ["haskell", "lhaskell"]
+    }
+  }
+}
+    
+  
+  
+  
+

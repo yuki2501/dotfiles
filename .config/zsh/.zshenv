@@ -48,3 +48,9 @@ export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-"/tmp/runtime-$(id -u)"}"
 if [[ ! -d "${XDG_RUNTIME_DIR}" ]]; then
     command mkdir -m 700 -p -- "${XDG_RUNTIME_DIR}"
 fi
+
+export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
+export PATH="/usr/local/texlive/2020/bin/x86_64-darwin:$PATH"
+
+export PATH=$HOME/.nodebrew/current/bin:$PATH
+export PATH=$HOME/Library/Application\ Support/Code/User/globalStorage/haskell.haskell:$PATH

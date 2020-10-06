@@ -29,3 +29,10 @@ aug END
 
 [[plugins]]
 repo = 'ryanoasis/vim-devicons'
+[[plugins]]
+repo = 'lervag/vimtex'
+on_ft = 'tex'
+[[plugins]]
+repo = 'qnighy/satysfi.vim'
+[[plugins]]
+repo = 'edkolev/tmuxline.vim'

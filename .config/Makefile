@@ -12,13 +12,16 @@ deploy: ## Create Symlink to HOME directory
 	@echo "Start to deploy dotfiles to HOME !!!"
 	-@mkdir $(HOME)/.config
 	@##making symbolic link for config file
-	@$(foreach x,$(zsh_config_files),ln -s $(HOME)/dotfiles/.config/zsh/$(x) $(HOME)/$(x);)  
-	@$(foreach x,$(tmux_config_files),ln -s $(HOME)/dotfiles/.config/tmux/$(x) $(HOME)/$(x);)
+	-@$(foreach x,$(zsh_config_files),ln -s $(HOME)/dotfiles/.config/zsh/$(x) $(HOME)/$(x);)  
+	-@$(foreach x,$(tmux_config_files),ln -s $(HOME)/dotfiles/.config/tmux/$(x) $(HOME)/$(x);)
 	@##making symbolic link for neovim config files
-	@ln -s $(HOME)/dotfiles/.config/nvim/ $(HOME)/.config
-	-@mkdir $(HOME)/.config/zinit
-	@ln -s $(HOME)/dotfiles/.config/zsh/zinit/ $(HOME)/.config/zinit/
-	@ln -s $(HOME)/dotfiles/.config/alacritty.yml $(HOME)/.config/alacritty.yml
+	-@ln -s $(HOME)/dotfiles/.config/nvim/ $(HOME)/.config
+	-@mkdir $(HOME)/.config/zsh
+	-@mkdir $(HOME)/.config/zsh/plugin
+	-@ln -s $(HOME)/dotfiles/.config/zsh/plugin/zinit/ $(HOME)/.config/zsh/plugin/
+	-@ln -s $(HOME)/dotfiles/.config/alacritty.yml $(HOME)/.config/alacritty.yml
+	-@ln -s $(HOME)/dotfiles/.config/.latexmkrc $(HOME)/.latexmkrc
+
 
 deploy4WSL: ## Create Symlink to HOME directory 
 	@echo "Start to deploy dotfiles to HOME !!!"
@@ -30,7 +33,7 @@ deploy4WSL: ## Create Symlink to HOME directory
 	@ln -s $(HOME)/dotfiles/.config/nvim/ $(HOME)/.config
 	-@mkdir $(HOME)/.config/zsh
 	-@mkdir $(HOME)/.config/zsh/plugin
-	@ln -s $(HOME)/dotfiles/.config/zsh/plugin/zinit/ $(HOME)/.config/zsh/plugin/zinit
+	@ln -s $(HOME)/dotfiles/.config/zsh/plugin/zinit/ $(HOME)/.config/zsh/plugin/zinit/
 
 zsh_plugin:
 	@sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"
