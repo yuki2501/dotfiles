@@ -1,0 +1,36 @@
+
+[[plugins]]
+repo = 'w0rp/ale'
+hook_add = '''
+" only run linters named in ale_linters settings
+let g:ale_linters_explicit = 1
+let g:ale_completion_enabled = 0
+" check
+let g:ale_lint_on_text_changed = 0
+let g:ale_lint_on_insert_leave = 1
+" sign column
+let g:ale_sign_column_always = 1
+let g:ale_sign_error =''
+let g:ale_sign_warning = ''
+" message
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+" moving between errors
+nm <silent> <C-k> <Plug>(ale_previous_wrap)
+nm <silent> <C-j> <Plug>(ale_next_wrap)
+" linter
+let g:ale_linters = {
+    \ 'haskell':            ['hlint'],
+\ }
+let g:ale_rust_cargo_use_clippy = 1
+" fix
+let g:ale_fixers = {
+    \ '*':               ['remove_trailing_lines', 'trim_whitespace'],
+\ }
+let g:ale_fix_on_save = 1
+hi link ALEError Error
+hi Warning term=underline cterm=underline ctermfg=Yellow gui=undercurl guisp=Gold
+hi link ALEWarning Warning
+hi link ALEInfo SpellCap
+'''

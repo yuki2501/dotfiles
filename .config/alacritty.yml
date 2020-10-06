@@ -1,0 +1,13 @@
+font:
+    normal:
+        family: JuliaMono
+    size: 13.0
+background_opacity: 0.5
+
+enable_experimental_conpty_backend: true
+shell:
+    program: /usr/local/bin/zsh
+
+key_bindings:
+  - { key: Yen,        chars: "\x5C"                      }
+  - { key: Yen, mods: Alt,       chars: "\xA5"                      }
