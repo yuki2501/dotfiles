@@ -1,5 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =3
-let g:netrw_dirhist_3='/Users/saitouyuutaka/musicplay-test/musicplay-test/app'
-let g:netrw_dirhist_2='/Users/saitouyuutaka/dotfiles/.config/nvim/plugin/dein/toml'
-let g:netrw_dirhist_1='/home/yuki2501/.zinit'
