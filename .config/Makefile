@@ -1,5 +1,5 @@
 
-zsh_config_files := .zshrc .zshenv
+zsh_config_files := .zshrc .zshenv .zshrc_lazy
 tmux_config_files := .tmux.conf
 
 1stsetup4mac: setup brew_setup mac_cli_install mac_gui_dev_install mac_gui_install

@@ -17,7 +17,6 @@ let g:vim_markdown_strikethrough = 1
 [[plugins]]
 repo = 'godlygeek/tabular'
 on_source = ['vim-markdown']
-
 [[plugins]]
 repo = 'tmux-plugins/vim-tmux'
 on_ft = ['tmux']

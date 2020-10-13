@@ -53,4 +53,3 @@ export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
 export PATH="/usr/local/texlive/2020/bin/x86_64-darwin:$PATH"
 
 export PATH=$HOME/.nodebrew/current/bin:$PATH
-export PATH=$HOME/Library/Application\ Support/Code/User/globalStorage/haskell.haskell:$PATH
