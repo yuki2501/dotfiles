@@ -14,11 +14,13 @@ let g:xdg_data_home   = !empty($XDG_DATA_HOME)
     \ : $HOME . '/.local/share'
 
 """ Options """
-set shell=/bin/sh
+set shell=/usr/local/bin/zsh
 " Indent
-set tabstop=4
-set shiftwidth=4 set softtabstop=4
+set tabstop=2
+set shiftwidth=2 
+set softtabstop=2
 set expandtab
+set autoindent
 set smartindent
 " Split
 set splitright
@@ -57,16 +59,16 @@ nnoremap sH <C-w>H
 exec 'source' g:xdg_config_home . '/nvim/plugin/dein/dein.vim'
 
 "config for vimtex
-let g:vimtex_fold_envs = 0
-let g:vimtex_view_general_viewer = 'displayline'
-let g:vimtex_view_general_options = '-r @line @pdf @tex'
-let g:vimtex_compiler_latexmk = {
-      \ 'options' : [
-      \   '-verbose',
-      \   '-file-line-error',
-      \   '-synctex=1',
-      \   '-interaction=nonstopmode',
-      \ ]}
+"let g:vimtex_fold_envs = 0
+"let g:vimtex_view_general_viewer = 'displayline'
+"let g:vimtex_view_general_options = '-r @line @pdf @tex'
+"let g:vimtex_compiler_latexmk = {
+"      \ 'options' : [
+"      \   '-verbose',
+"      \   '-file-line-error',
+"      \   '-synctex=1',
+"      \   '-interaction=nonstopmode',
+"      \ ]}
 let mapleader = ";"
 let maplocalleader = ","
 inoremap <silent> jj <ESC>

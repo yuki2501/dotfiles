@@ -2,7 +2,7 @@ font:
     normal:
         family: JuliaMono
     size: 16.0
-background_opacity: 0.8
+background_opacity: 0.9 
 
 enable_experimental_conpty_backend: true
 shell:

@@ -8,6 +8,9 @@ export PATH="/usr/bin:/usr/local/bin:/usr/local/sbin:${HOME}/Library/Application
 #export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 
 alias exa='exa --all'
+alias runghc='stack runghc'
+alias ghc='stack ghc'
+alias ghci='stack ghci'
 # powerline setting for wsl
 #powerline-daemon -q
 #. /home/linuxbrew/.linuxbrew/lib/python3.7/site-packages/powerline/bindings/zsh/powerline.zsh

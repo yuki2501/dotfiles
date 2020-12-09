@@ -2,7 +2,7 @@
 repo = 'Shougo/defx.nvim'
 on_cmd = ['Defx']
 hook_add = '''
-nn <silent><Leader>d :Defx <CR>
+nnoremap <silent> <C-f> :<C-u> Defx <CR>
 '''
 hook_source = '''
 " close vim if the only window left open is a Defx
