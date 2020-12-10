@@ -42,3 +42,9 @@ hook_add = '''
 let g:winresizer_vert_resize = 1
 let g:winresizer_horiz_resize = 1
 '''
+[[plugin]]
+repo = 'tyru/eskk.vim'
+hook_add = '''
+set imdisable
+imap <C-^> <Plug>(eskk:enable)
+'''
