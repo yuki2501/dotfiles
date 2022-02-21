@@ -1,4 +1,4 @@
-""" Neovim provider """
+vim.cmd[[""" Neovim provider """
 " Doc: https://neovim.io/doc/user/provider.html
 " Doc: https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
 let g:xdg_config_home = !empty($XDG_CONFIG_HOME)
@@ -10,7 +10,8 @@ let g:xdg_cache_home  = !empty($XDG_CACHE_HOME)
 let g:xdg_data_home   = !empty($XDG_DATA_HOME)
     \ ? $XDG_DATA_HOME
     \ : $HOME . '/.local/share'
-
+]]
+vim.cmd[[
 """ Options """
 set shell=/usr/local/bin/zsh
 let g:did_install_default_menus = 1
@@ -30,30 +31,30 @@ let g:loaded_spellfile_plugin   = 1
 let g:loaded_tarPlugin          = 1
 let g:loaded_tutor_mode_plugin  = 1
 let g:loaded_zipPlugin          = 1
-let g:skip_loading_mswin        = 1
-" Indent
-set tabstop=2
-set shiftwidth=2 
-set softtabstop=2
-set expandtab
-set autoindent
-set smartindent
-" Split
-set splitright
-set splitbelow
-" Look and Feel
-set termguicolors
-set cursorcolumn
-set cursorline
-set colorcolumn=80
-set number
-set relativenumber
-set pumblend=15
-set winblend=15
+let g:skip_loading_mswin        = 1]]
+-- Indent
+vim.opt.tabstop=2
+vim.opt.shiftwidth=2 
+vim.opt.softtabstop=2
+vim.o.expandtab = true
+vim.o.autoindent = true
+vim.o.smartindent = true
+-- Split
+vim.opt.splitright = true
+vim.opt.splitbelow = true
+vim.opt.mouse= 'a'
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.termguicolors = true
+vim.opt.cursorcolumn = true
+vim.opt.cursorline  = true
+vim.opt.pumblend=15
+vim.opt.winblend=15
+vim.o.whichwrap = 'b,s,h,l,<,>,[,]'
+vim.cmd[[" Look and Feel
 " All previous modes
-set mouse=a
 " Automatically wrap left and right
-set whichwrap=b,s,h,l,<,>,[,]
+set colorcolumn=80
 "set clipboard = unnamedplus
 nnoremap sj <C-w>j
 nnoremap sk <C-w>k
@@ -65,13 +66,13 @@ nnoremap sL <C-w>L
 nnoremap sH <C-w>H
 let mapleader = ";"
 inoremap <silent> jj <ESC>
+]]
 
-
-
+vim.cmd[[
 """ Plugin """
 " dein.vim
 " Repo: https://github.com/Shougo/dein.vim
-exec 'source' g:xdg_config_home . '/nvim/plugin/dein/dein.vim'
+exec 'source' g:xdg_config_home . '/nvim/plugin/dein/dein.lua'
 function! s:LazyLoadPlugs(timer) abort
   " save current position by marking Z because plug#load reloads current buffer
   normal! mZ
@@ -100,4 +101,4 @@ lua << EOF
 
 EOF
 endfunction
-call timer_start(40, function("s:LazyLoadPlugs"))
+call timer_start(5, function("s:LazyLoadPlugs"))]]

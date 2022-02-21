@@ -1,4 +1,4 @@
-" dein.vim
+vim.cmd[[" dein.vim
 " Repo: https://github.com/Shougo/dein.vim
 let s:dein_data_dir        = g:xdg_data_home   . '/nvim/plugin/dein'
 let s:dein_repo_dir        = s:dein_data_dir   . '/repos/github.com/Shougo/dein.vim'
@@ -38,4 +38,4 @@ if dein#check_install()
     call dein#check_update(v:true)
     " Remove the disabled plugin
     call map(dein#check_clean(), "delete(v:val, 'rf')")
-endif
+endif]]
