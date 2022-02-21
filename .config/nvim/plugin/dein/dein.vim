@@ -19,16 +19,13 @@ endif
 exe 'source' s:dein_github_api_token_file
 
 
-if dein#load_state(s:dein_data_dir)
+if dein#min#load_state(s:dein_data_dir)
     call dein#begin(s:dein_data_dir)
     let s:toml_dir = s:dein_config_dir . '/toml'
     call dein#load_toml(s:toml_dir . '/dein.toml',       { 'lazy': 0 })
-    call dein#load_toml(s:toml_dir . '/intellisense.toml',        { 'lazy': 0 })
+    call dein#load_toml(s:toml_dir . '/intellisense.toml',        { 'lazy': 1 })
     call dein#load_toml(s:toml_dir . '/dein_lazy.toml',  { 'lazy': 1 })
-    call dein#load_toml(s:toml_dir . '/defx.toml',       { 'lazy': 1 })
     call dein#load_toml(s:toml_dir . '/filetype.toml',{'lazy':1})
-    call dein#load_toml(s:toml_dir . '/ale.toml',{'lazy':0})
-    call dein#load_toml(s:toml_dir . '/lightline.toml',{'lazy':0})
     call dein#end()
     call dein#save_state()
 endif
@@ -38,10 +35,7 @@ syntax enable
 
 " Install not installed plugins on startup
 if dein#check_install()
-    call dein#install()
-    " It is better than `:UpdateRemotePlugins` for dein
-    call dein#remote_plugins()
+    call dein#check_update(v:true)
     " Remove the disabled plugin
     call map(dein#check_clean(), "delete(v:val, 'rf')")
-    call dein#recache_runtimepath()
 endif

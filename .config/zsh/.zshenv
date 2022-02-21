@@ -50,6 +50,4 @@ if [[ ! -d "${XDG_RUNTIME_DIR}" ]]; then
 fi
 
 export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
-export PATH="/usr/local/texlive/2020/bin/x86_64-darwin:$PATH"
-
-export PATH=$HOME/.nodebrew/current/bin:$PATH
+. "$HOME/.cargo/env"

@@ -2,35 +2,15 @@ autoload -U compinit promptinit
 compinit
 promptinit
 autoload -U +X bashcompinit && bashcompinit
-eval "$(stack --bash-completion-script stack)"
 setopt nonomatch
-export PATH="/usr/bin:/usr/local/bin:/usr/local/sbin:${HOME}/Library/Application Support/Code/User/globalStorage/haskell.haskell:$PATH"
+export PATH="/usr/bin:/usr/local/bin:/usr/local/sbin:$PATH"
 #export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 
 alias exa='exa --all'
-alias runghc='stack runghc'
-alias ghc='stack ghc'
-alias ghci='stack ghci'
-# powerline setting for wsl
-#powerline-daemon -q
-#. /home/linuxbrew/.linuxbrew/lib/python3.7/site-packages/powerline/bindings/zsh/powerline.zsh
-# powerline setting for mac
-function powerline_precmd() {
-    PS1="$(/usr/local/bin/powerline-go -error $? -shell zsh)"
-}
-
-function install_powerline_precmd() {
-  for s in "${precmd_functions[@]}"; do
-    if [ "$s" = "powerline_precmd" ]; then
-      return
-    fi
-  done
-  precmd_functions+=(powerline_precmd)
-}
-
-if [ "$TERM" != "linux" ]; then
-    install_powerline_precmd
-fi
+alias rm='rm -i'
+alias mv='mv -i'
+alias cp='cp -i'
+alias c='clear'
 if [[ -z "$TMUX" ]]; then
   tmux new-session
 fi
@@ -39,3 +19,11 @@ fi
 . "${XDG_CONFIG_HOME}/zsh/plugin/zinit/zinit.zsh"
 
 
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
+
+### starship ###
+eval "$(starship init zsh)"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+eval "$(zoxide init zsh)" 

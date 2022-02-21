@@ -24,10 +24,9 @@ on_ft = ['tmux']
 [[plugins]]
 repo = 'cespare/vim-toml'
 on_ft = ['toml']
-
 [[plugins]]
-repo = 'chrisbra/csv.vim'
-on_ft = ['csv']
+repo = 'qnighy/satysfi.vim'
+on_ft = ['satysfi']
 
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'
@@ -38,15 +37,3 @@ repo = 'osyo-manga/vim-precious'
 depends = ['context_filetype.vim']
 on_source = ['context_filetype.vim']
 
-[[plugins]]
-repo = 'neovimhaskell/haskell-vim'
-on_ft = ['haskell']
-hook_source = '''
-let g:haskell_enable_quantification = 1
-let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
-let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
-let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
-let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
-let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
-let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
-'''

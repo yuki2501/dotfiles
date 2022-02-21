@@ -5,7 +5,7 @@ ZINT[HOME_DIR]="${XDG_DATA_HOME}/zsh/plugin/zinit"
 # Auto install
 if [[ ! -f "${ZINT[HOME_DIR]}/bin/zinit.zsh" ]]; then
     echo 'Install Zinit'
-    git clone 'https://github.com/zdharma/zinit' "${ZINT[HOME_DIR]}/bin"
+    git clone 'https://github.com/zdharma-continuum/zinit' "${ZINT[HOME_DIR]}/bin"
     . "${ZINT[HOME_DIR]}/bin/zinit.zsh"
     zinit self-update
 fi
@@ -17,7 +17,7 @@ autoload -Uz _zinit
 alias zinit-update='zinit update && zinit self-update && zinit compile'
 ### End of Zinit installer's chunk
 zinit ice wait'0' lucid
-zinit light zdharma/fast-syntax-highlighting
+zinit light zdharma-continuum/fast-syntax-highlighting
 zinit ice wait'0' lucid
 zinit light chrissicool/zsh-256color
 zinit ice wait'0' lucid

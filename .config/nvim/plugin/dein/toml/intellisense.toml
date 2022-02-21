@@ -3,7 +3,8 @@
 repo = 'neoclide/coc.nvim'
 merged = 0
 rev = 'release'
-hook_add = '''
+on_event = ['BufRead']
+hook_source = '''
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 " use <tab> for trigger completion and navigate to the next complete item
@@ -20,7 +21,7 @@ ino <expr> <cr> pumvisible()    ? "\<C-y>" : "\<C-g>u\<CR>"
 ino <silent><expr> <cr> pumvisible()
     \ ? coc#_select_confirm()
     \ : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-nm <silent> <C-j> <Plug>(coc-diagnostic-prev)
+nm <silent> <C-l> <Plug>(coc-diagnostic-prev)
 nm <silent> <C-k> <Plug>(coc-diagnostic-next)
 nm <Leader>rn <Plug>(coc-rename)
 aug CocCompleteDone
@@ -59,5 +60,3 @@ aug CocExplorerAutoClose
 aug END
 '''
 
-[[plugins]]
-repo = 'wellle/tmux-complete.vim'

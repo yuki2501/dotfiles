@@ -1,7 +1,5 @@
 """ Neovim provider """
 " Doc: https://neovim.io/doc/user/provider.html
-let g:loaded_python_provider = 1
-let g:python_host_prog       = ''
 " Doc: https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
 let g:xdg_config_home = !empty($XDG_CONFIG_HOME)
     \ ? $XDG_CONFIG_HOME
@@ -15,6 +13,24 @@ let g:xdg_data_home   = !empty($XDG_DATA_HOME)
 
 """ Options """
 set shell=/usr/local/bin/zsh
+let g:did_install_default_menus = 1
+let g:did_install_syntax_menu   = 1
+let g:did_indent_on             = 1
+let g:did_load_filetypes        = 1
+let g:did_load_ftplugin         = 1
+let g:loaded_2html_plugin       = 1
+let g:loaded_gzip               = 1
+let g:loaded_man                = 1
+let g:loaded_matchit            = 1
+let g:loaded_matchparen         = 1
+let g:loaded_netrwPlugin        = 1
+let g:loaded_remote_plugins     = 1
+let g:loaded_shada_plugin       = 1
+let g:loaded_spellfile_plugin   = 1
+let g:loaded_tarPlugin          = 1
+let g:loaded_tutor_mode_plugin  = 1
+let g:loaded_zipPlugin          = 1
+let g:skip_loading_mswin        = 1
 " Indent
 set tabstop=2
 set shiftwidth=2 
@@ -38,12 +54,6 @@ set winblend=15
 set mouse=a
 " Automatically wrap left and right
 set whichwrap=b,s,h,l,<,>,[,]
-"clipboard config for win
-"nnoremap <silent> <Space>y :.w !win32yank.exe -i<CR><CR>
-"vnoremap <silent> <Space>y :w !win32yank.exe -i<CR><CR>
-"nnoremap <silent> <Space>p :r !win32yank.exe -o<CR>
-"vnoremap <silent> <Space>p :r !win32yank.exe -o<CR>
-"clipboard config for mac
 "set clipboard = unnamedplus
 nnoremap sj <C-w>j
 nnoremap sk <C-w>k
@@ -53,31 +63,41 @@ nnoremap sJ <C-w>J
 nnoremap sK <C-w>K
 nnoremap sL <C-w>L
 nnoremap sH <C-w>H
+let mapleader = ";"
+inoremap <silent> jj <ESC>
+
+
+
 """ Plugin """
 " dein.vim
 " Repo: https://github.com/Shougo/dein.vim
 exec 'source' g:xdg_config_home . '/nvim/plugin/dein/dein.vim'
+function! s:LazyLoadPlugs(timer) abort
+  " save current position by marking Z because plug#load reloads current buffer
+  normal! mZ
+  call dein#add('nvim-lua/plenary.nvim')
+  call dein#config('plenary.nvim',{'lazy':1,})
+  call dein#add('shaunsingh/nord.nvim')
+  call dein#config('nord.nvim',{'lazy':1,})
+  call dein#add('kyazdani42/nvim-web-devicons')
+  call dein#config('nvim-web-devicons',{'lazy':0,})
+  call dein#add('nvim-lualine/lualine.nvim')
+  call dein#config('lualine.nvim',{'lazy':1,'on_lua':'nord',})
+  normal! g`Z
+  delmarks Z
 
-"config for vimtex
-"let g:vimtex_fold_envs = 0
-"let g:vimtex_view_general_viewer = 'displayline'
-"let g:vimtex_view_general_options = '-r @line @pdf @tex'
-"let g:vimtex_compiler_latexmk = {
-"      \ 'options' : [
-"      \   '-verbose',
-"      \   '-file-line-error',
-"      \   '-synctex=1',
-"      \   '-interaction=nonstopmode',
-"      \ ]}
-let mapleader = ";"
-let maplocalleader = ","
-inoremap <silent> jj <ESC>
-let g:tmuxline_preset = {
-  \'a'    : '#S',
-  \'c'    : ['#(whoami)', '#(uptime | cud -d " " -f 1,2,3)'],
-  \'win'  : ['#I', '#W'],
-  \'cwin' : ['#I', '#W', '#F'],
-  \'x'    : '#(date)',
-  \'y'    : ['%R', '%a', '%Y'],
-  \'z'    : '#H'}
-let g:tmuxline_theme = 'solarized'
+lua << EOF
+  -- Example config in lua
+  vim.g.nord_contrast = true
+  vim.g.nord_borders = false
+  vim.g.nord_disable_background = true
+  vim.g.nord_italic = false
+  -- Load the colorscheme
+  require('nord').set()
+  require('lualine').setup{
+    options = {theme = 'nord'}
+  }
+
+EOF
+endfunction
+call timer_start(40, function("s:LazyLoadPlugs"))

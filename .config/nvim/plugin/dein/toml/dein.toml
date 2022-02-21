@@ -1,50 +1,15 @@
 [[plugins]]
+repo = 'lewis6991/impatient.nvim'
+hook_add = '''
+lua require('impatient')
+'''
+[[plugins]]
+repo = 'nathom/filetype.nvim'
+
+[[plugins]]
 repo = 'Shougo/dein.vim'
 hook_add = '''
 let g:dein#auto_recache = 1
 '''
-### Look and Feel ###
-[[plugins]]
-repo = 'lifepillar/vim-solarized8'
-hook_add = '''
-set background=dark
-" make terminal background transparent
-let g:solarized_termtrans = 1
-" let g:solarized_old_cursor_style = 1
-aug ColorSheme
-    au!
-    au VimEnter * nested colo solarized8
-aug END
-'''
-
-### Completion ###
-[[plugins]]
-repo = 'jiangmiao/auto-pairs'
-hook_add = '''
-aug AutoPairs
-    au!
-    au Filetype html let b:AutoPairs = AutoPairsDefine({ '<': '>' })
-    au FileType rust let b:AutoPairs = AutoPairsDefine({ '\w\zs<': '>' })
-    au FileType satysfi let b:AutoPairs = AutoPairsDefine({ '<': '>' })
-aug END
-'''
 
 
-[[plugins]]
-repo = 'ryanoasis/vim-devicons'
-[[plugins]]
-repo = 'qnighy/satysfi.vim'
-[[plugins]]
-repo = 'edkolev/tmuxline.vim'
-[[plugins]]
-repo = 'simeji/winresizer'
-hook_add = '''
-let g:winresizer_vert_resize = 1
-let g:winresizer_horiz_resize = 1
-'''
-[[plugin]]
-repo = 'tyru/eskk.vim'
-hook_add = '''
-set imdisable
-imap <C-^> <Plug>(eskk:enable)
-'''
