@@ -32,7 +32,6 @@ aug CocCompleteDone
 aug END
 let g:coc_global_extensions = [
     \ 'coc-actions',
-    \ 'coc-explorer',
     \ 'coc-git',
     \ 'coc-spell-checker',
     \ 'coc-emoji',
@@ -53,12 +52,6 @@ let g:coc_global_extensions = [
     \ 'coc-docker',
     \ 'coc-texlab',
 \ ]
-" coc-explorer
-nm <Leader>e :CocCommand explorer <CR>
-aug CocExplorerAutoClose
-    au!
-    au BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
-aug END
 '''
 
 

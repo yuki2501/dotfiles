@@ -1,0 +1,105 @@
+[[plugins]]
+repo = 'nvim-telescope/telescope.nvim'
+depends = ['plenary.nvim']
+on_event = ['CursorHold']
+hook_add = '''
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown({}))<cr>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>cc <cmd>lua require('telescope.builtin').commands(require('telescope.themes').get_dropdown({}))<cr>
+nnoremap <leader>fw <cmd>lua require('telescope.builtin').live_grep(require('telescope.themes').get_dropdown({}))<cr>
+nnoremap <leader>fc <cmd>lua require('telescope.builtin').git_bcommits(require('telescope.themes').get_dropdown({}))<cr>
+nnoremap <leader>fst <cmd>lua require('telescope.builtin').git_status(require('telescope.themes').get_dropdown({}))<cr>
+nnoremap " <cmd>lua require('telescope.builtin').registers(require('telescope.themes').get_dropdown({}))<cr>
+'''
+hook_post_source = '''
+lua << EOF
+
+local telescopeConfig = require("telescope.config")
+-- Clone the default Telescope configuration
+local vimgrep_arguments = { unpack(telescopeConfig.values.vimgrep_arguments) }
+
+-- I want to search in hidden/dot files.
+table.insert(vimgrep_arguments, "--hidden")
+-- I don't want to search in the `.git` directory.
+table.insert(vimgrep_arguments, "--glob")
+table.insert(vimgrep_arguments, "!.git/*")
+require('telescope').setup{
+  defaults = {
+    vimgrep_arguments = vimgrep_arguments,
+  },
+  pickers = {
+    find_files = {
+			find_command = { "rg", "--files", "--hidden", "--glob", "!.git/*" },
+    }
+  }
+}
+EOF
+'''
+[[plugins]]
+repo = 'nvim-telescope/telescope-file-browser.nvim'
+on_lua = 'telescope'
+hook_add = '''
+nnoremap <silent> <leader>fe <cmd>Telescope file_browser<cr>
+'''
+hook_post_source = '''
+lua << EOF
+-- You don't need to set any of these options.
+-- IMPORTANT!: this is only a showcase of how you can set default options!
+require("telescope").setup {
+  extensions = {
+    file_browser = {
+      theme = "dropdown",
+      hidden = true,
+      -- disables netrw and use telescope-file-browser in its place
+      hijack_netrw = true,
+    },
+  },
+}
+-- To get telescope-file-browser loaded and working with telescope,
+-- you need to call load_extension, somewhere after setup function:
+require("telescope").load_extension "file_browser"
+EOF
+'''
+
+[[plugins]]
+repo = 'jvgrootveld/telescope-zoxide'
+on_lua = 'telescope'
+hook_add = '''
+nnoremap <silent> <leader>cd <cmd>Telescope zoxide list<cr>
+'''
+
+hook_post_source = '''
+lua << EOF
+local t = require("telescope")
+local z_utils = require("telescope._extensions.zoxide.utils")
+
+-- Configure the extension
+t.setup({
+  extensions = {
+    zoxide = {
+      prompt_title = "[ Walking on the shoulders of TJ ]",
+      mappings = {
+        default = {
+          after_action = function(selection)
+            print("Update to (" .. selection.z_score .. ") " .. selection.path)
+          end
+        },
+        ["<C-s>"] = {
+          before_action = function(selection) print("before C-s") end,
+          action = function(selection)
+            vim.cmd("edit " .. selection.path)
+          end
+        },
+        ["<C-q>"] = { action = z_utils.create_basic_command("split") },
+      },
+    },
+  },
+})
+
+-- Load the extension
+t.load_extension('zoxide')
+
+-- Add a mapping
+vim.keymap.set("n", "<leader>cd", t.extensions.zoxide.list)
+EOF
+'''

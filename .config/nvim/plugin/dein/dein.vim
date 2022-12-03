@@ -1,5 +1,4 @@
-
-vim.cmd[[" dein.vim
+" dein.vim
 " Repo: https://github.com/Shougo/dein.vim
 let s:dein_data_dir        = g:xdg_data_home   . '/nvim/plugin/dein'
 let s:dein_repo_dir        = s:dein_data_dir   . '/repos/github.com/Shougo/dein.vim'
@@ -28,17 +27,16 @@ if dein#min#load_state(g:dein#cache_directory)
     call dein#load_toml(s:toml_dir . '/intellisense.toml', { 'lazy': 1 })
     call dein#load_toml(s:toml_dir . '/dein_lazy.toml', { 'lazy': 1 })
     call dein#load_toml(s:toml_dir . '/filetype.toml',{'lazy':1})
+    call dein#load_toml(s:toml_dir . '/telescope.toml',{'lazy':1})
     call dein#end()
+    filetype plugin indent on
+    syntax enable
     call dein#save_state()
 endif
-
-filetype on
-syntax enable
 
 if dein#check_install()
   call dein#check_update(v:true)
   call map(dein#check_clean(),"delete(v:val, 'rf')")
 endif
-]]
 
 

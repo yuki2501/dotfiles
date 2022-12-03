@@ -2,7 +2,7 @@
   "suggest.timeout": 500,
   "suggest.completionItemKindLabels": {
     "function": "\uf794",
-    "method":"\uf6a6",
+    "method": "\uf6a6",
     "variable": "\uf71b",
     "constant": "\uf8ff",
     "struct": "\ufb44",
@@ -26,13 +26,19 @@
     "default": "\uf29c"
   },
 
-  "explorer.icon.enableNerdfont": true,
-  "explorer.icon.source": "nvim-web-devicons",
-  "explorer.file.showHiddenFiles": true,
   "yaml.format.enable": true,
   "git.addGBlameToBufferVar": true,
   "coc.preferences.formatOnSaveFiletypes": [
-    "Haskell","c","cpp","javascript","javascriptreact","typescript","typescriptreact","json","markdown"],
+    "Haskell",
+    "c",
+    "cpp",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "json",
+    "markdown"
+  ],
   "cSpell.enabledLanguageIds": [
     "git-commit",
     "gina-commit",
@@ -45,23 +51,23 @@
     "haskell": {
       "command": "haskell-language-server-wrapper",
       "args": ["--lsp"],
-      "rootPatterns": ["*.cabal", "stack.yaml", "cabal.project", "package.yaml"],
+      "rootPatterns": [
+        "*.cabal",
+        "stack.yaml",
+        "cabal.project",
+        "package.yaml"
+      ],
       "filetypes": ["haskell", "lhaskell"]
     },
-    "ocaml":{
+    "ocaml": {
       "command": "ocamllsp",
-      "rootPatterns": ["*.opam","dune-project"],
+      "rootPatterns": ["*.opam", "dune-project"],
       "filetypes": ["ocaml"]
     },
-    "csharp-ls":{
+    "csharp-ls": {
       "command": "csharp-ls",
       "filetypes": ["cs"],
-      "rootPatterns": ["*.csproj",".vim/",".git/",".hg/"]
+      "rootPatterns": ["*.csproj", ".vim/", ".git/", ".hg/"]
     }
   }
 }
-    
-  
-  
-  
-

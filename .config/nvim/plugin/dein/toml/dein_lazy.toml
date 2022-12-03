@@ -1,39 +1,4 @@
 [[plugins]]
-repo = 'nvim-telescope/telescope.nvim'
-depends = ['plenary.nvim']
-on_event = ['CursorHold']
-hook_add = '''
-nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown({}))<cr>
-nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
-nnoremap <leader>fw <cmd>lua require('telescope.builtin').live_grep(require('telescope.themes').get_dropdown({}))<cr>
-nnoremap <leader>fc <cmd>lua require('telescope.builtin').git_bcommits(require('telescope.themes').get_dropdown({}))<cr>
-nnoremap <leader>fst <cmd>lua require('telescope.builtin').git_status(require('telescope.themes').get_dropdown({}))<cr>
-'''
-hook_post_source = '''
-lua << EOF
-
-local telescopeConfig = require("telescope.config")
--- Clone the default Telescope configuration
-local vimgrep_arguments = { unpack(telescopeConfig.values.vimgrep_arguments) }
-
--- I want to search in hidden/dot files.
-table.insert(vimgrep_arguments, "--hidden")
--- I don't want to search in the `.git` directory.
-table.insert(vimgrep_arguments, "--glob")
-table.insert(vimgrep_arguments, "!.git/*")
-require('telescope').setup{
-  defaults = {
-    vimgrep_arguments = vimgrep_arguments,
-  },
-  pickers = {
-    find_files = {
-			find_command = { "rg", "--files", "--hidden", "--glob", "!.git/*" },
-    }
-  }
-}
-EOF
-'''
-[[plugins]]
 repo = 'simeji/winresizer'
 on_cmd = 'WinResizerStartResize'
 hook_add = '''
@@ -50,7 +15,7 @@ lua << EOF
 require'nvim-treesitter.configs'.setup{
   highlight = {
     enable = true,
-    disable = {"lua","toml","vim","ocaml"},
+    disable = {"lua","vim","ocaml","toml","gitcommit"},
   },
 } 
 EOF
@@ -116,13 +81,6 @@ EOF
 repo = 'vim-denops/denops.vim'
 on_event = ['BufRead']
 
-[[plugins]]
-repo = 'tversteeg/registers.nvim'
-on_cmd = ['Registers']
-hook_add = '''
-nnoremap <silent>" <cmd>Registers<CR>
-inoremap <silent><C-R> <cmd>Registers<CR>
-'''
 
 [[plugins]]
 repo = 'nvim-lualine/lualine.nvim'
@@ -291,22 +249,6 @@ EOF
 '''
 
 [[plugins]]
-repo = 'EdenEast/nightfox.nvim'
-on_event = ['CursorHold']
-hook_source = '''
-lua << EOF
-require('nightfox').setup({
-  options = {
-    -- Compiled file's destination location
-    transparent = true,    -- Disable setting background
-  },
-})
-
-vim.cmd("colorscheme duskfox")
-EOF
-'''
-
-[[plugins]]
 repo = 'klen/nvim-test'
 on_cmd = ['TestSuite']
 hook_add = '''
@@ -327,13 +269,4 @@ vim.notify = require("notify")
 EOF
 '''
 
-[[plugins]]
-repo = 'TimUntersberger/neogit'
-on_event = ['CursorHold']
-hook_post_source = '''
-lua << EOF
-local neogit = require('neogit')
-neogit.setup {}
-EOF
-'''
 

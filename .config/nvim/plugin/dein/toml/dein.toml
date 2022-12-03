@@ -1,3 +1,4 @@
+
 [[plugins]]
 repo = 'lewis6991/impatient.nvim'
 hook_add = '''
@@ -15,6 +16,7 @@ repo = 'nvim-lua/plenary.nvim'
 repo = 'Shougo/dein.vim'
 hook_add = '''
 let g:dein#auto_recache = 1
+let g:dein#ftplugin = {}
 '''
 
 
@@ -35,3 +37,20 @@ lua require("nvim-web-devicons").get_icons()
 '''
 [[plugins]]
 repo = 'rhysd/committia.vim'
+
+[[plugins]]
+repo = 'EdenEast/nightfox.nvim'
+hook_add = '''
+lua << EOF
+require('nightfox').setup({
+  options = {
+    -- Compiled file's destination location
+    transparent = true,    -- Disable setting background
+  },
+})
+
+vim.cmd("colorscheme duskfox")
+EOF
+'''
+
+
