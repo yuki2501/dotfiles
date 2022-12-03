@@ -1,0 +1,77 @@
+
+
+times in msec
+ clock   self+sourced   self:  sourced script
+ clock   elapsed:              other lines
+
+000.015  000.015: --- NVIM STARTING ---
+001.486  001.470: locale set
+002.416  000.931: inits 1
+002.440  000.023: window checked
+002.445  000.006: parsing arguments
+005.727  003.282: expanding arguments
+005.818  000.090: inits 2
+006.355  000.537: init highlight
+006.357  000.002: waiting for UI
+009.920  003.563: done waiting for UI
+009.934  000.015: init screen for UI
+009.977  000.043: init default mappings
+010.041  000.064: init default autocommands
+011.039  000.101  000.101: sourcing /usr/local/Cellar/neovim/HEAD-e9803e1/share/nvim/runtime/ftplugin.vim
+011.190  000.046  000.046: sourcing /usr/local/Cellar/neovim/HEAD-e9803e1/share/nvim/runtime/indent.vim
+012.151  000.018  000.018: sourcing /Users/yuki/.config/nvim/plugin/dein/github-api-token.vim
+012.797  000.073  000.073: sourcing /Users/yuki/.local/share/nvim/plugin/dein/repos/github.com/Shougo/dein.vim/autoload/dein/min.vim
+014.404  000.077  000.077: sourcing /usr/local/Cellar/neovim/HEAD-e9803e1/share/nvim/runtime/ftoff.vim
+014.902  000.244  000.244: sourcing /Users/yuki/.cache/dein/repos/github.com/Shougo/dein.vim/autoload/dein/autoload.vim
+015.666  000.468  000.468: sourcing /Users/yuki/.cache/dein/repos/github.com/Shougo/dein.vim/autoload/dein/util.vim
+026.199  013.103  012.314: sourcing /Users/yuki/.cache/dein/state_nvim.vim
+026.469  000.036  000.036: sourcing /Users/yuki/.cache/dein/.cache/init.lua/.dein/filetype.vim
+026.604  000.043  000.043: sourcing /usr/local/Cellar/neovim/HEAD-e9803e1/share/nvim/runtime/filetype.lua
+026.716  000.024  000.024: sourcing /usr/local/Cellar/neovim/HEAD-e9803e1/share/nvim/runtime/filetype.vim
+027.152  000.193  000.193: sourcing /usr/local/Cellar/neovim/HEAD-e9803e1/share/nvim/runtime/syntax/synload.vim
+027.263  000.440  000.247: sourcing /usr/local/Cellar/neovim/HEAD-e9803e1/share/nvim/runtime/syntax/syntax.vim
+027.538  000.153  000.153: sourcing /Users/yuki/.cache/dein/repos/github.com/Shougo/dein.vim/autoload/dein.vim
+027.825  015.872  001.984: sourcing /Users/yuki/.config/nvim/plugin/dein/dein.vim
+027.838  016.468  000.597: sourcing /Users/yuki/.config/nvim/init.lua
+027.866  001.209: sourcing vimrc file(s)
+029.270  000.017  000.017: sourcing /Users/yuki/.config/nvim/plugin/dein/github-api-token.vim
+030.724  000.034  000.034: sourcing /usr/local/Cellar/neovim/HEAD-e9803e1/share/nvim/runtime/ftoff.vim
+030.967  001.561  001.527: sourcing /Users/yuki/.cache/dein/state_nvim.vim
+031.148  000.030  000.030: sourcing /Users/yuki/.cache/dein/.cache/init.lua/.dein/filetype.vim
+031.312  000.087  000.087: sourcing /usr/local/Cellar/neovim/HEAD-e9803e1/share/nvim/runtime/filetype.lua
+031.461  000.023  000.023: sourcing /usr/local/Cellar/neovim/HEAD-e9803e1/share/nvim/runtime/filetype.vim
+031.807  000.120  000.120: sourcing /usr/local/Cellar/neovim/HEAD-e9803e1/share/nvim/runtime/syntax/nosyntax.vim
+032.056  000.122  000.122: sourcing /usr/local/Cellar/neovim/HEAD-e9803e1/share/nvim/runtime/syntax/synload.vim
+032.141  000.568  000.326: sourcing /usr/local/Cellar/neovim/HEAD-e9803e1/share/nvim/runtime/syntax/syntax.vim
+032.414  003.333  001.047: sourcing /Users/yuki/.config/nvim/plugin/dein/dein.vim
+032.549  000.019  000.019: sourcing /Users/yuki/.config/nvim/plugin/dein/github-api-token.vim
+033.219  000.061  000.061: sourcing /Users/yuki/.cache/dein/.cache/init.lua/.dein/plugin/committia.vim
+033.336  000.044  000.044: sourcing /Users/yuki/.cache/dein/.cache/init.lua/.dein/plugin/nvim-web-devicons.vim
+033.450  000.044  000.044: sourcing /Users/yuki/.cache/dein/.cache/init.lua/.dein/plugin/plenary.vim
+036.327  002.810  002.810: sourcing /Users/yuki/.cache/dein/.cache/init.lua/.dein/plugin/wakatime.vim
+037.218  000.032  000.032: sourcing /usr/local/Cellar/neovim/HEAD-e9803e1/share/nvim/runtime/plugin/gzip.vim
+037.326  000.024  000.024: sourcing /usr/local/Cellar/neovim/HEAD-e9803e1/share/nvim/runtime/plugin/health.vim
+037.423  000.021  000.021: sourcing /usr/local/Cellar/neovim/HEAD-e9803e1/share/nvim/runtime/plugin/man.vim
+037.516  000.025  000.025: sourcing /usr/local/Cellar/neovim/HEAD-e9803e1/share/nvim/runtime/plugin/matchit.vim
+037.684  000.027  000.027: sourcing /usr/local/Cellar/neovim/HEAD-e9803e1/share/nvim/runtime/plugin/matchparen.vim
+037.789  000.031  000.031: sourcing /usr/local/Cellar/neovim/HEAD-e9803e1/share/nvim/runtime/plugin/netrwPlugin.vim
+037.881  000.023  000.023: sourcing /usr/local/Cellar/neovim/HEAD-e9803e1/share/nvim/runtime/plugin/rplugin.vim
+037.976  000.021  000.021: sourcing /usr/local/Cellar/neovim/HEAD-e9803e1/share/nvim/runtime/plugin/shada.vim
+038.078  000.030  000.030: sourcing /usr/local/Cellar/neovim/HEAD-e9803e1/share/nvim/runtime/plugin/spellfile.vim
+038.175  000.029  000.029: sourcing /usr/local/Cellar/neovim/HEAD-e9803e1/share/nvim/runtime/plugin/tarPlugin.vim
+038.267  000.025  000.025: sourcing /usr/local/Cellar/neovim/HEAD-e9803e1/share/nvim/runtime/plugin/tohtml.vim
+038.357  000.024  000.024: sourcing /usr/local/Cellar/neovim/HEAD-e9803e1/share/nvim/runtime/plugin/tutor.vim
+038.461  000.032  000.032: sourcing /usr/local/Cellar/neovim/HEAD-e9803e1/share/nvim/runtime/plugin/zipPlugin.vim
+040.521  006.001: loading rtp plugins
+040.730  000.209: loading packages
+040.733  000.003: loading after plugins
+040.745  000.013: inits 3
+042.598  001.852: reading ShaDa
+043.956  001.358: opening buffers
+044.669  000.713: BufEnter autocommands
+044.673  000.004: editing files in windows
+044.821  000.148: VimEnter autocommands
+044.824  000.003: UIEnter autocommands
+044.828  000.004: before starting main loop
+045.336  000.508: first screen update
+045.338  000.002: --- NVIM STARTED ---

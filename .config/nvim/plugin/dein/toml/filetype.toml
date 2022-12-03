@@ -3,7 +3,7 @@ repo = 'Shougo/neco-vim'
 on_ft = ['vim']
 
 [[plugins]]
-repo = 'plasticboy/vim-markdown'
+repo = 'preservim/vim-markdown'
 depends = ['tabular']
 on_ft = ['markdown']
 hook_source = '''
@@ -13,6 +13,16 @@ let g:vim_markdown_math = 1
 let g:vim_markdown_strikethrough = 1
 '''
 
+[[plugins]]
+repo = 'kat0h/bufpreview.vim'
+on_ft = ['markdown']
+hook_post_source = '''
+call PreviewMarkdown
+'''
+hook_add = '''
+nnoremap <leader>mm <cmd>PreviewMarkdown <cr>
+nnoremap <leader>mc <cmd>PreviewMarkdownClose <cr>
+'''
 [[plugins]]
 repo = 'godlygeek/tabular'
 on_source = ['vim-markdown']
@@ -35,5 +45,6 @@ on_ft = ['markdown', 'toml']
 [[plugins]]
 repo = 'osyo-manga/vim-precious'
 depends = ['context_filetype.vim']
-on_source = ['context_filetype.vim']
+on_source= ['context_filetype.vim']
+
 

@@ -1,7 +1,6 @@
 
 [[plugins]]
 repo = 'neoclide/coc.nvim'
-merged = 0
 rev = 'release'
 on_event = ['BufRead']
 hook_source = '''
@@ -12,18 +11,21 @@ function! s:check_back_space() abort
     let col = col('.') - 1
     return !col || getline('.')[col - 1] =~ '\s'
 endfunction
-ino <silent><expr> <Tab> pumvisible() ? "\<C-n>"
-    \ : <SID>check_back_space() ? "\<Tab>"
-    \ : coc#refresh()
-ino <expr> <Tab> pumvisible()   ? "\<C-n>" : "\<Tab>"
-ino <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-ino <expr> <cr> pumvisible()    ? "\<C-y>" : "\<C-g>u\<CR>"
-ino <silent><expr> <cr> pumvisible()
-    \ ? coc#_select_confirm()
-    \ : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1):
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+imap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+inoremap <silent><expr> <cr> coc#pum#visible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
 nm <silent> <C-l> <Plug>(coc-diagnostic-prev)
 nm <silent> <C-k> <Plug>(coc-diagnostic-next)
 nm <Leader>rn <Plug>(coc-rename)
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
 aug CocCompleteDone
   au!
   au CompleteDone * if pumvisible() == 0 | pclose | endif
@@ -34,7 +36,6 @@ let g:coc_global_extensions = [
     \ 'coc-git',
     \ 'coc-spell-checker',
     \ 'coc-emoji',
-    \ 'coc-snippets',
     \ 'coc-markdownlint',
     \ 'coc-json',
     \ 'coc-yaml',
@@ -59,4 +60,5 @@ aug CocExplorerAutoClose
     au BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
 aug END
 '''
+
 

@@ -1,38 +1,67 @@
-
 [[plugins]]
 repo = 'nvim-telescope/telescope.nvim'
 depends = ['plenary.nvim']
-on_cmd=['Telescope']
+on_event = ['CursorHold']
 hook_add = '''
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown({}))<cr>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>fw <cmd>lua require('telescope.builtin').live_grep(require('telescope.themes').get_dropdown({}))<cr>
+nnoremap <leader>fc <cmd>lua require('telescope.builtin').git_bcommits(require('telescope.themes').get_dropdown({}))<cr>
+nnoremap <leader>fst <cmd>lua require('telescope.builtin').git_status(require('telescope.themes').get_dropdown({}))<cr>
+'''
+hook_post_source = '''
+lua << EOF
+
+local telescopeConfig = require("telescope.config")
+-- Clone the default Telescope configuration
+local vimgrep_arguments = { unpack(telescopeConfig.values.vimgrep_arguments) }
+
+-- I want to search in hidden/dot files.
+table.insert(vimgrep_arguments, "--hidden")
+-- I don't want to search in the `.git` directory.
+table.insert(vimgrep_arguments, "--glob")
+table.insert(vimgrep_arguments, "!.git/*")
+require('telescope').setup{
+  defaults = {
+    vimgrep_arguments = vimgrep_arguments,
+  },
+  pickers = {
+    find_files = {
+			find_command = { "rg", "--files", "--hidden", "--glob", "!.git/*" },
+    }
+  }
+}
+EOF
 '''
 [[plugins]]
 repo = 'simeji/winresizer'
 on_cmd = 'WinResizerStartResize'
 hook_add = '''
-nnoremap <C-e> <cmd>WinResizerStartResize<cr>
+nnoremap <silent><C-e> <d>WinResizerStartResize<cr>
 let g:winresizer_vert_resize = 1
 let g:winresizer_horiz_resize = 1
 '''
 [[plugins]]
-repo = 'vim-denops/denops.vim'
-
-[[plugins]]
-repo = 'kyazdani42/nvim-tree.lua'
-on_cmd = ['NvimTreeToggle']
-hook_add = '''
-nnoremap <C-f> :NvimTreeToggle<CR>
-nnoremap <leader>r :NvimTreeRefresh<CR>
-nnoremap <leader>n :NvimTreeFindFile<CR>
-'''
-hook_source = '''
+repo = 'nvim-treesitter/nvim-treesitter'
+on_event = ['BufRead']
+hook_post_update = 'TSUpdate'
+hook_post_source = '''
 lua << EOF
-require'nvim-tree'.setup()
+require'nvim-treesitter.configs'.setup{
+  highlight = {
+    enable = true,
+    disable = {"lua","toml","vim","ocaml"},
+  },
+} 
 EOF
 '''
+[[plugins]]
+repo = 'wakatime/vim-wakatime'
+on_event=['BufRead']
 
 [[plugins]]
 repo = 'akinsho/toggleterm.nvim'
+on_cmd = ['ToggleTerm']
 hook_add = '''
 nnoremap <silent><c-\> <Cmd>exe v:count1 . "ToggleTerm"<CR>
 inoremap <silent><c-\> <Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>
@@ -54,9 +83,14 @@ require("toggleterm").setup{
   direction = 'horizontal' ,
   close_on_exit = true, -- close the terminal window when the process exits
   shell = vim.o.shell, -- change the default shell
+  on_open = function(term)
+    vim.cmd("startinsert!")
+    vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", {noremap = true, silent = true})
+  end,
 }
 EOF
 '''
+
 [[plugins]]
 repo = 'jiangmiao/auto-pairs'
 on_event = ['InsertEnter']
@@ -70,17 +104,6 @@ aug END
 '''
 
 [[plugins]]
-repo = 'vim-skk/skkeleton'
-on_event = ['InsertEnter']
-hook_source = '''
-call skkeleton#config({'globalJisyo': '~/.skk/SKK-JISYO.L'})
-call skkeleton#config({'wikiJisyo': '~/.skk/SKK-JISYO.jawiki'})
-'''
-hook_add = '''
-imap <C-j> <Plug>(skkeleton-enable)
-cmap <C-j> <Plug>(skkeleton-enable)
-'''
-[[plugins]]
 repo = 'numToStr/Comment.nvim'
 on_event = ['BufRead']
 hook_source = '''
@@ -88,33 +111,229 @@ lua << EOF
 require('Comment').setup()
 EOF
 '''
+
 [[plugins]]
-repo = 'nvim-treesitter/nvim-treesitter'
-merged = 0
-on_event = 'BufRead'
+repo = 'vim-denops/denops.vim'
+on_event = ['BufRead']
+
+[[plugins]]
+repo = 'tversteeg/registers.nvim'
+on_cmd = ['Registers']
+hook_add = '''
+nnoremap <silent>" <cmd>Registers<CR>
+inoremap <silent><C-R> <cmd>Registers<CR>
+'''
+
+[[plugins]]
+repo = 'nvim-lualine/lualine.nvim'
+on_event = ['CursorHold']
+hook_post_source = '''
+lua << EOF
+require('lualine').setup {
+  options = {theme = 'horizon'}
+}
+EOF
+'''
+
+[[plugins]]
+repo = 'mvllow/modes.nvim'
+on_event = ['BufRead']
 hook_source = '''
 lua << EOF
-require('nvim-treesitter.configs').setup{
-  highlight = {
-    enable = true,
-    disable = {"vim","toml","lua"},
+require('modes').setup({
+	colors = {
+		copy = "#f5c359",
+		delete = "#c75c6a",
+		insert = "#78ccc5",
+		visual = "#9745be",
+	},
+
+	-- Set opacity for cursorline and number background
+	line_opacity = 0.15,
+
+	-- Enable cursor highlights
+	set_cursor = true,
+
+	-- Enable cursorline initially, and disable cursorline for inactive windows
+	-- or ignored filetypes
+	set_cursorline = true,
+
+	-- Enable line number highlights to match cursorline
+	set_number = true,
+
+	-- Disable modes highlights in specified filetypes
+	-- Please PR commonly ignored filetypes
+	ignore_filetypes = { 'NvimTree', 'TelescopePrompt' }
+})
+EOF
+'''
+[[plugins]]
+repo = 'folke/todo-comments.nvim'
+on_event = ['BufRead']
+hook_source = '''
+lua << EOF
+  require('todo-comments').setup()
+EOF
+'''
+
+
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter-textobjects'
+on_event = 'BufRead'
+hook_post_source = '''
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  textobjects = {
+    select = {
+      enable = true,
+
+      -- Automatically jump forward to textobj, similar to targets.vim
+      lookahead = true,
+
+      keymaps = {
+        -- You can use the capture groups defined in textobjects.scm
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+        ["ib"] = "@block.inner",
+        ["ab"] = "@block.outer",
+      },
+    },
+    move = {
+      enable = true,
+      set_jumps = true,
+      goto_next_start = {
+        ["]m"] = "@function.outer",
+        ["]]"] = "@class.outer",
+        ["]b"] = "@block.outer",
+      },
+      goto_next_end = {
+        ["]M"] = "@function.outer",
+        ["]["] = "@class.outer",
+        ["]B"] = "@block.outer"
+      },
+      goto_previous_start = {
+        ["[m"] = "@function.outer",
+        ["[["] = "@class.outer",
+        ["[b"] = "@block.outer",
+      },
+      goto_previous_end = {
+        ["[M"] = "@function.outer",
+        ["[]"] = "@class.outer",
+        ["[B"] = "@block.outer",
+      },
+    },
   },
 }
 EOF
 '''
-hook_post_update = 'TSUpdate'
+
 [[plugins]]
-repo = 'lukas-reineke/indent-blankline.nvim'
-on_event = ['BufRead']
-hook_post_update = '''
+repo = 'yuki-yano/fuzzy-motion.vim'
+on_cmd = 'FuzzyMotion'
+hook_add = '''
+nnoremap <silent> <leader>s <cmd>FuzzyMotion<cr>
+'''
+
+[[plugins]]
+repo = "hkupty/iron.nvim"
+on_cmd = 'IronRepl' 
+hook_add = '''
+nnoremap <silent> <leader>rr <cmd>IronRepl<cr>
+'''
+hook_post_source = '''
 lua << EOF
-vim.opt.list = true
-vim.opt.listchars:append("space:⋅")
-vim.opt.listchars:append("eol:↴")
-require('indent_blackline').setup{
-  space_char_blankline = " ",
-  show_current_context = true,
-  show_current_context_start = true,
+local iron = require("iron.core")
+
+iron.setup {
+  config = {
+    -- If iron should expose `<plug>(...)` mappings for the plugins
+    should_map_plug = false,
+    -- Whether a repl should be discarded or not
+    scratch_repl = true,
+    -- Your repl definitions come here
+    repl_definition = {
+      sh = {
+        command = {"zsh"}
+      },
+      fsharp = {
+        command = {"dotnet", "fsi"}
+      },
+    },
+    repl_open_cmd = require('iron.view').curry.bottom(40),
+    -- how the REPL window will be opened, the default is opening
+    -- a float window of height 40 at the bottom.
+  },
+  -- Iron doesn't set keymaps by default anymore. Set them here
+  -- or use `should_map_plug = true` and map from you vim files
+  keymaps = {
+    send_motion = "<space>sc",
+    visual_send = "<space>sc",
+    send_file = "<space>sf",
+    send_line = "<space>sl",
+    send_mark = "<space>sm",
+    mark_motion = "<space>mc",
+    mark_visual = "<space>mc",
+    remove_mark = "<space>md",
+    cr = "<space>s<cr>",
+    interrupt = "<space>s<space>",
+    exit = "<space>sq",
+    clear = "<space>cl",
+  },
+  -- If the highlight is on, you can change how it looks
+  -- For the available options, check nvim_set_hl
+  highlight = {
+    italic = true
+  }
 }
 EOF
 '''
+
+[[plugins]]
+repo = 'EdenEast/nightfox.nvim'
+on_event = ['CursorHold']
+hook_source = '''
+lua << EOF
+require('nightfox').setup({
+  options = {
+    -- Compiled file's destination location
+    transparent = true,    -- Disable setting background
+  },
+})
+
+vim.cmd("colorscheme duskfox")
+EOF
+'''
+
+[[plugins]]
+repo = 'klen/nvim-test'
+on_cmd = ['TestSuite']
+hook_add = '''
+nnoremap <silent> <leader>ts <cmd>TestSuite<cr>
+'''
+hook_post_source = '''
+lua << EOF
+require('nvim-test').setup()
+EOF
+'''
+
+[[plugins]]
+repo = 'rcarriga/nvim-notify'
+on_event = ['CursorHold']
+hook_post_source = '''
+lua << EOF
+vim.notify = require("notify")
+EOF
+'''
+
+[[plugins]]
+repo = 'TimUntersberger/neogit'
+on_event = ['CursorHold']
+hook_post_source = '''
+lua << EOF
+local neogit = require('neogit')
+neogit.setup {}
+EOF
+'''
+

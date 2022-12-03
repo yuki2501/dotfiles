@@ -5,6 +5,11 @@ lua require('impatient')
 '''
 [[plugins]]
 repo = 'nathom/filetype.nvim'
+hook_add = '''
+lua require('filetype')
+'''
+[[plugins]]
+repo = 'nvim-lua/plenary.nvim'
 
 [[plugins]]
 repo = 'Shougo/dein.vim'
@@ -13,3 +18,20 @@ let g:dein#auto_recache = 1
 '''
 
 
+[[plugins]]
+repo = 'kyazdani42/nvim-web-devicons'
+hook_add = '''
+lua << EOF
+require('nvim-web-devicons').setup({
+  override = {
+    ts = {
+      icon = 'ﯤ', -- Nerd Fontでコピーしたアイコン
+      color = '#3178C6' -- TypeScriptの色
+    }
+  }
+})
+EOF
+lua require("nvim-web-devicons").get_icons()
+'''
+[[plugins]]
+repo = 'rhysd/committia.vim'
