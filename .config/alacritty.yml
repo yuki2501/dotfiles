@@ -2,25 +2,20 @@ font:
     normal:
         family: PlemolJP35 Console NF
         style: Text
-    meidum:
-        family: PlemolJP35 Console NF
-        style: Medium
     bold:
         family: PlemolJP35 Console NF
         style: Bold
     italic:
         family: PlemolJP35 Console NF
         style:  Italic
-    bold italic:
+    bold_italic:
         family: PlemolJP35 Console NF
         style: Bold Italic
     size: 13.7 
-    use_thin_stroke: true
 window:
   opacity: 0.9 
-  decorations: Buttonless
+  decorations: buttonless
 
-enable_experimental_conpty_backend: true
 shell:
     program: /usr/local/bin/zsh
 

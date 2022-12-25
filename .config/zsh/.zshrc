@@ -17,6 +17,7 @@ alias fzc='exa -F| grep -v /|  fzf --select-1 | xargs bat'
 alias fsi='dotnet fsi'
 alias ffc='fzf | xargs cat | pbcopy'
 alias nzi='zi && nvim'
+alias wet='curl wttr.in/Sendai'
 if [[ -z "$TMUX" ]]; then
   tmux new-session
 fi
@@ -55,3 +56,5 @@ export PATH="/usr/local/opt/openjdk/bin:$PATH"
 autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey "^O" edit-command-line
+
+export PATH="/Applications/Coq-Platform~8.16~2022.09~beta1.app/Contents/Resources/bin:$PATH"

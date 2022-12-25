@@ -15,9 +15,20 @@ lua << EOF
 require'nvim-treesitter.configs'.setup{
   highlight = {
     enable = true,
-    disable = {"lua","vim","ocaml","toml","gitcommit"},
+    disable = {"lua","vim","javascript","jsx","typescript","tsx","ocaml","toml","gitcommit"},
   },
-} 
+
+  incremental_selection = {
+    enable = true,
+    disable = {"typescript","tsx"},
+    keymaps = {
+      init_selection = "gnn",
+      node_incremental = "grn",
+      scope_incremental = "grc",
+      node_decremental = "grm",
+    },
+  },
+}
 EOF
 '''
 [[plugins]]
@@ -40,7 +51,6 @@ require("toggleterm").setup{
   hide_numbers = true, -- hide the number column in toggleterm buffers
   shade_filetypes = {},
   shade_terminals = true,
-  shading_factor = '<number>', -- the degree by which to darken to terminal colour, default: 1 for dark backgrounds, 3 for light
   start_in_insert = true,
   insert_mappings = true, -- whether or not the open mapping applies in insert mode
   terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
@@ -81,58 +91,6 @@ EOF
 repo = 'vim-denops/denops.vim'
 on_event = ['BufRead']
 
-
-[[plugins]]
-repo = 'nvim-lualine/lualine.nvim'
-on_event = ['CursorHold']
-hook_post_source = '''
-lua << EOF
-require('lualine').setup {
-  options = {theme = 'horizon'}
-}
-EOF
-'''
-
-[[plugins]]
-repo = 'mvllow/modes.nvim'
-on_event = ['BufRead']
-hook_source = '''
-lua << EOF
-require('modes').setup({
-	colors = {
-		copy = "#f5c359",
-		delete = "#c75c6a",
-		insert = "#78ccc5",
-		visual = "#9745be",
-	},
-
-	-- Set opacity for cursorline and number background
-	line_opacity = 0.15,
-
-	-- Enable cursor highlights
-	set_cursor = true,
-
-	-- Enable cursorline initially, and disable cursorline for inactive windows
-	-- or ignored filetypes
-	set_cursorline = true,
-
-	-- Enable line number highlights to match cursorline
-	set_number = true,
-
-	-- Disable modes highlights in specified filetypes
-	-- Please PR commonly ignored filetypes
-	ignore_filetypes = { 'NvimTree', 'TelescopePrompt' }
-})
-EOF
-'''
-[[plugins]]
-repo = 'folke/todo-comments.nvim'
-on_event = ['BufRead']
-hook_source = '''
-lua << EOF
-  require('todo-comments').setup()
-EOF
-'''
 
 
 [[plugins]]
@@ -186,6 +144,9 @@ require'nvim-treesitter.configs'.setup {
 }
 EOF
 '''
+[[plugins]]
+repo = 'machakann/vim-sandwich'
+on_event = ['BufRead']
 
 [[plugins]]
 repo = 'yuki-yano/fuzzy-motion.vim'
@@ -260,13 +221,16 @@ require('nvim-test').setup()
 EOF
 '''
 
+
 [[plugins]]
-repo = 'rcarriga/nvim-notify'
-on_event = ['CursorHold']
+repo = 'David-Kunz/treesitter-unit'
+on_event = ['BufRead']
 hook_post_source = '''
 lua << EOF
-vim.notify = require("notify")
+vim.api.nvim_set_keymap('x', 'iu', ':lua require"treesitter-unit".select()<CR>', {noremap=true})
+vim.api.nvim_set_keymap('x', 'au', ':lua require"treesitter-unit".select(true)<CR>', {noremap=true})
+vim.api.nvim_set_keymap('o', 'iu', ':<c-u>lua require"treesitter-unit".select()<CR>', {noremap=true})
+vim.api.nvim_set_keymap('o', 'au', ':<c-u>lua require"treesitter-unit".select(true)<CR>', {noremap=true})
 EOF
 '''
-
 

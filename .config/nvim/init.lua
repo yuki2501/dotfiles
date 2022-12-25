@@ -1,5 +1,3 @@
-pcall(require, "impatient")
-pcall(require, "filetype")
 vim.g.did_install_default_menus = 1
 vim.g.did_install_syntax_menu   = 1
 vim.g.did_indent_on             = 1
@@ -20,6 +18,7 @@ vim.g.loaded_zipPlugin          = 1
 vim.g.skip_loading_mswin        = 1
 vim.g.did_install_default_menus = 1
 vim.g.did_indent_on             = 1
+vim.g.did_load_filetypes        = 1
 vim.g.loaded_2html_plugin       = 1
 vim.g.loaded_gzip               = 1
 vim.g.loaded_man                = 1
@@ -85,6 +84,8 @@ let mapleader = ","
 noremap \ , 
 inoremap <silent> jj <ESC>
 set shada='20,<50,s10
+let &grepprg='rg --vimgrep'
 set updatetime=1
+let g:python3_host_prog = '/Users/yuki/.pyenv/shims/python3.11'
 ]]
 

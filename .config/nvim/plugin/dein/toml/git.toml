@@ -1,0 +1,3 @@
+[[plugins]]
+repo = 'lambdalisue/gin.vim'
+depends = 'denops.vim'

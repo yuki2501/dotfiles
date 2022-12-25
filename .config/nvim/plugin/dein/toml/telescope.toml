@@ -4,11 +4,13 @@ depends = ['plenary.nvim']
 on_event = ['CursorHold']
 hook_add = '''
 nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown({}))<cr>
-nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
-nnoremap <leader>cc <cmd>lua require('telescope.builtin').commands(require('telescope.themes').get_dropdown({}))<cr>
+nnoremap <leader>bb <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>fw <cmd>lua require('telescope.builtin').live_grep(require('telescope.themes').get_dropdown({}))<cr>
 nnoremap <leader>fc <cmd>lua require('telescope.builtin').git_bcommits(require('telescope.themes').get_dropdown({}))<cr>
+nnoremap <leader>cm <cmd>lua require('telescope.builtin').commands(require('telescope.themes').get_dropdown({}))<cr>
 nnoremap <leader>fst <cmd>lua require('telescope.builtin').git_status(require('telescope.themes').get_dropdown({}))<cr>
+nnoremap <leader>qf  <cmd>Telescope quickfix<cr>
+nnoremap <leader>qs  <cmd>Telescope quickfixhistory<cr>
 nnoremap " <cmd>lua require('telescope.builtin').registers(require('telescope.themes').get_dropdown({}))<cr>
 '''
 hook_post_source = '''
@@ -26,6 +28,10 @@ table.insert(vimgrep_arguments, "!.git/*")
 require('telescope').setup{
   defaults = {
     vimgrep_arguments = vimgrep_arguments,
+    mappings = {
+      i = {
+      ["<C-f>"] = "send_to_qflist"
+    }}
   },
   pickers = {
     find_files = {
@@ -33,31 +39,6 @@ require('telescope').setup{
     }
   }
 }
-EOF
-'''
-[[plugins]]
-repo = 'nvim-telescope/telescope-file-browser.nvim'
-on_lua = 'telescope'
-hook_add = '''
-nnoremap <silent> <leader>fe <cmd>Telescope file_browser<cr>
-'''
-hook_post_source = '''
-lua << EOF
--- You don't need to set any of these options.
--- IMPORTANT!: this is only a showcase of how you can set default options!
-require("telescope").setup {
-  extensions = {
-    file_browser = {
-      theme = "dropdown",
-      hidden = true,
-      -- disables netrw and use telescope-file-browser in its place
-      hijack_netrw = true,
-    },
-  },
-}
--- To get telescope-file-browser loaded and working with telescope,
--- you need to call load_extension, somewhere after setup function:
-require("telescope").load_extension "file_browser"
 EOF
 '''
 
@@ -103,3 +84,4 @@ t.load_extension('zoxide')
 vim.keymap.set("n", "<leader>cd", t.extensions.zoxide.list)
 EOF
 '''
+
