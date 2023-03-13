@@ -3,6 +3,14 @@ repo = 'lambdalisue/fern.vim'
 on_cmd = ['Fern']
 hook_add = '''
 nnoremap <silent><leader>e <cmd>Fern . -drawer -toggle -reveal=%<cr>
+function! s:init_fern() abort
+  nnoremap <buffer> <C-P>k <Cmd>lua require'telescope.builtin'.keymaps(); vim.cmd("normal ifern-action ")<CR>
+endfunction
+
+augroup fern-custom
+  autocmd! *
+  autocmd FileType fern call s:init_fern()
+augroup END
 '''
 
 
@@ -24,3 +32,20 @@ augroup fern-settings
 augroup END
 '''
 
+[[plugins]]
+repo = 'TheLeoP/fern-renderer-web-devicons.nvim'
+depends = ['fern.vim','nvim-web-devicons']
+hook_source = '''
+let g:fern#renderer = 'nvim-web-devicons'
+'''
+
+[[plugins]]
+repo = 'lambdalisue/glyph-palette.vim'
+depends = ['fern.vim','nvim-web-devicons','fern-renderer-web-devicons']
+hook_post_source = '''
+augroup my-glyph-palette
+  autocmd! *
+  autocmd FileType fern call glyph_palette#apply()
+  autocmd FileType nerdtree,startify call glyph_palette#apply()
+augroup END
+'''

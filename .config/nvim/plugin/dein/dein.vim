@@ -37,10 +37,11 @@ if dein#min#load_state(s:dein_cache_dir)
     call dein#save_state()
 endif
 
+filetype plugin indent on
+syntax enable
+
 if dein#check_install()
   call dein#check_update(v:true)
   call map(dein#check_clean(),"delete(v:val, 'rf')")
 endif
 
-filetype plugin indent on
-syntax enable

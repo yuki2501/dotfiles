@@ -1,16 +1,5 @@
 
 [[plugins]]
-repo = 'lewis6991/impatient.nvim'
-hook_add = '''
-lua require('impatient')
-'''
-
-[[plugins]]
-repo = 'nathom/filetype.nvim'
-hook_add = '''
-lua require('filetype')
-'''
-[[plugins]]
 repo = 'nvim-lua/plenary.nvim'
 
 [[plugins]]
@@ -27,4 +16,7 @@ repo = 'rhysd/committia.vim'
 
 [[plugins]]
 repo = 'tyru/open-browser.vim'
+
+[[plugins]]
+repo = 'whonore/Coqtail'
 

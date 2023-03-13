@@ -5,22 +5,23 @@ hook_add = '''
 nnoremap <silent><C-e> <d>WinResizerStartResize<cr>
 let g:winresizer_vert_resize = 1
 let g:winresizer_horiz_resize = 1
+
 '''
+
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
-on_event = ['BufRead']
+on_event= ['BufRead']
 hook_post_update = 'TSUpdate'
 hook_post_source = '''
 lua << EOF
 require'nvim-treesitter.configs'.setup{
   highlight = {
     enable = true,
-    disable = {"lua","vim","javascript","jsx","typescript","tsx","ocaml","toml","gitcommit"},
+    disable = {"lua","vim","toml","gitcommit"},
   },
 
   incremental_selection = {
     enable = true,
-    disable = {"typescript","tsx"},
     keymaps = {
       init_selection = "gnn",
       node_incremental = "grn",
@@ -30,6 +31,21 @@ require'nvim-treesitter.configs'.setup{
   },
 }
 EOF
+'''
+[[plugins]]
+repo = 'phaazon/hop.nvim'
+on_event = ['BufRead']
+hook_post_source = '''
+lua << EOF
+require('hop').setup()
+EOF
+'''
+[[plugins]]
+repo = 'mfussenegger/nvim-treehopper'
+on_lua = 'hop'
+hook_add = '''
+omap     <silent> m :<C-U>lua require('tsht').nodes()<CR>
+xnoremap <silent> m :lua require('tsht').nodes()<CR>
 '''
 [[plugins]]
 repo = 'wakatime/vim-wakatime'
@@ -46,7 +62,7 @@ hook_post_source = '''
 lua << EOF
 require("toggleterm").setup{
   -- size can be a number or function which is passed the current terminal
-  size =  20,
+  size =  15,
   open_mapping = [[<c-\>]],
   hide_numbers = true, -- hide the number column in toggleterm buffers
   shade_filetypes = {},
@@ -64,18 +80,6 @@ require("toggleterm").setup{
   end,
 }
 EOF
-'''
-
-[[plugins]]
-repo = 'jiangmiao/auto-pairs'
-on_event = ['InsertEnter']
-hook_source = '''
-aug AutoPairs
-    au!
-    au Filetype html let b:AutoPairs = AutoPairsDefine({ '<': '>' })
-    au FileType rust let b:AutoPairs = AutoPairsDefine({ '\w\zs<': '>' })
-    au FileType satysfi let b:AutoPairs = AutoPairsDefine({ '<': '>' })
-aug END
 '''
 
 [[plugins]]
@@ -160,6 +164,8 @@ repo = "hkupty/iron.nvim"
 on_cmd = 'IronRepl' 
 hook_add = '''
 nnoremap <silent> <leader>rr <cmd>IronRepl<cr>
+nnoremap <silent> <leader>rf <cmd>IronFocus<cr>
+nnoremap <silent> <leader>rh <cmd>IronHide<cr>
 '''
 hook_post_source = '''
 lua << EOF
@@ -179,8 +185,11 @@ iron.setup {
       fsharp = {
         command = {"dotnet", "fsi"}
       },
+      ocaml = {
+        command = {"utop"}
+      }
     },
-    repl_open_cmd = require('iron.view').curry.bottom(40),
+    repl_open_cmd = require('iron.view').curry.bottom(35),
     -- how the REPL window will be opened, the default is opening
     -- a float window of height 40 at the bottom.
   },
@@ -233,4 +242,62 @@ vim.api.nvim_set_keymap('o', 'iu', ':<c-u>lua require"treesitter-unit".select()<
 vim.api.nvim_set_keymap('o', 'au', ':<c-u>lua require"treesitter-unit".select(true)<CR>', {noremap=true})
 EOF
 '''
+[[plugins]]
+repo = 'kevinhwang91/nvim-hlslens'
+on_lua = 'scrollbar'
+hhok_post_source = '''
+lua << EOF
+require('hlslens').setup({
+       build_position_cb = function(plist, _, _, _)
+            require("scrollbar.handlers.search").handler.show(plist.start_pos)
+       end,
+       calm_down = true
+    })
+
+    vim.cmd([[
+        augroup scrollbar_search_hide
+            autocmd!
+            autocmd CmdlineLeave : lua require('scrollbar.handlers.search').handler.hide()
+        augroup END
+    ]])
+
+local kopts = {noremap = true, silent = true}
+
+vim.api.nvim_set_keymap('n', 'n',
+    [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
+    kopts)
+vim.api.nvim_set_keymap('n', 'N',
+    [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
+    kopts)
+vim.api.nvim_set_keymap('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+vim.api.nvim_set_keymap('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+vim.api.nvim_set_keymap('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
+vim.api.nvim_set_keymap('n', 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
+
+vim.api.nvim_set_keymap('n', '<Leader>l', '<Cmd>noh<CR>', kopts)
+EOF
+'''
+
+[[plugins]]
+repo = 'aiya000/aho-bakaup.vim'
+on_event = ['BufRead']
+on_cmd = [
+    'w',
+    'write',
+    'BakaupBackupExecute',
+    'BakaupEnable',
+    'BakaupDisable',
+    'BakaupArchiveBackups',
+    'BakaupSetBackupDir',
+    'BakaupExplore',
+    'BakaupTexplore',
+    'BakaupVexplore',
+    'BakaupSexplore',
+]
+hook_source = '''
+let g:bakaup_auto_backup = 1
+'''
+[[plugins]]
+repo = 'kevinhwang91/nvim-bqf'
+on_ft =['qf']
 

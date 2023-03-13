@@ -27,3 +27,6 @@ zinit ice wait'1' lucid \
     atpull'%atclone' \
     pick'color.zsh'
 zinit light 'seebi/dircolors-solarized'
+
+zinit ice lucid depth"1" blockf
+zinit light yuki-yano/zeno.zsh

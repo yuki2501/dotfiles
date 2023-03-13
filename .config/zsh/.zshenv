@@ -48,6 +48,6 @@ export XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR:-"/tmp/runtime-$(id -u)"}"
 if [[ ! -d "${XDG_RUNTIME_DIR}" ]]; then
     command mkdir -m 700 -p -- "${XDG_RUNTIME_DIR}"
 fi
-
+export FZF_DEFAULT_OPTS='--reverse'
 export NVIM_LISTEN_ADDRESS=/tmp/nvimsocket
 . "$HOME/.cargo/env"

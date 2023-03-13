@@ -14,10 +14,12 @@ require('nightfox').setup({
     }
   },
 })
-vim.cmd("colorscheme duskfox")
 EOF
+colorscheme duskfox
 '''
-
+[[plugins]]
+repo = 'folke/styler.nvim'
+on_lua = 'nightfox'
 [[plugins]]
 repo = 'nvim-lualine/lualine.nvim'
 on_event = ['CursorHold']
@@ -72,16 +74,7 @@ EOF
 '''
 
 [[plugins]]
-repo = 'rcarriga/nvim-notify'
-on_event = ['CursorHold']
-hook_post_source = '''
-lua << EOF
-vim.notify = require("notify")
-EOF
-'''
-
-[[plugins]]
-repo = 'kyazdani42/nvim-web-devicons'
+repo = 'nvim-tree/nvim-web-devicons'
 on_event = ['CursorHold']
 hook_post_source = '''
 lua << EOF
@@ -97,4 +90,11 @@ EOF
 lua require("nvim-web-devicons").get_icons()
 '''
 
-
+[[plugins]]
+repo = 'petertriho/nvim-scrollbar'
+on_event = ['BufRead']
+hook_post_source = '''
+lua << EOF
+require('scrollbar').setup()
+EOF
+'''

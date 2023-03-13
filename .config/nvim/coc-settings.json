@@ -39,6 +39,7 @@
     "json",
     "markdown"
   ],
+  "coc.preferences.useQuickfixForLocations": true,
   "cSpell.enabledLanguageIds": [
     "git-commit",
     "gina-commit",

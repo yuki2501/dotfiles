@@ -25,7 +25,7 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-
+nmap <silent> ge <Plug>(coc-list-diagnostics)
 aug CocCompleteDone
   au!
   au CompleteDone * if pumvisible() == 0 | pclose | endif
@@ -54,4 +54,20 @@ let g:coc_global_extensions = [
 \ ]
 '''
 
-
+[[plugins]]
+repo = 'zbirenbaum/copilot.lua'
+on_event = 'InsertEnter'
+hook_post_source = '''
+lua << EOF
+require('copilot').setup({})
+EOF
+'''
+[[plugins]]
+repo = 'williamboman/mason.nvim'
+on_cmd = ['Mason']
+on_lua = 'mason'
+hook_post_source = '''
+lua << EOF
+require("mason").setup()
+EOF
+'''

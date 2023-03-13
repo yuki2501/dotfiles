@@ -57,4 +57,15 @@ autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey "^O" edit-command-line
 
+
+export ZENO_GIT_CAT="bat"
+bindkey '^m' zeno-auto-snippet-and-accept-line
+
+bindkey '^i' zeno-completion
+bindkey '^x' zeno-insert-snippet
+
+bindkey '^x '  zeno-insert-space
+bindkey '^x^m' accept-line
+bindkey '^x^z' zeno-toggle-auto-snippet
+
 export PATH="/Applications/Coq-Platform~8.16~2022.09~beta1.app/Contents/Resources/bin:$PATH"

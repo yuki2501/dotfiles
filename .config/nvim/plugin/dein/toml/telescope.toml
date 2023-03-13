@@ -42,6 +42,8 @@ require('telescope').setup{
 EOF
 '''
 
+
+
 [[plugins]]
 repo = 'jvgrootveld/telescope-zoxide'
 on_lua = 'telescope'
@@ -85,3 +87,12 @@ vim.keymap.set("n", "<leader>cd", t.extensions.zoxide.list)
 EOF
 '''
 
+[[plugins]]
+repo = 'Allianaab2m/telescope-kensaku.nvim'
+on_lua = 'telescope'
+hook_post_source = '''
+lua << EOF
+local t = require("telescope")
+t.load_extension("kensaku")
+EOF
+'''
