@@ -5,7 +5,7 @@ let s:dein_repo_dir        = s:dein_data_dir   . '/repos/github.com/Shougo/dein.
 let s:dein_config_dir      = g:xdg_config_home . '/nvim/plugin/dein'
 let s:dein_cache_dir       = g:xdg_cache_home . '/dein' 
 let g:dein#cache_directory = g:xdg_cache_home  . '/dein' . '/.cache'
-let s:dein_github_api_token_file = s:dein_config_dir . '/github-api-token.vim' 
+let s:dein_github_api_token_file = $HOME . '/dotfiles/.config/nvim/plugin/dein/github-api-token.vim' 
 let g:dein#ftplugin = {}
 "" Auto install
 if !isdirectory(s:dein_data_dir)
@@ -24,7 +24,7 @@ endif
 
 if dein#min#load_state(s:dein_cache_dir)
     call dein#begin(s:dein_cache_dir)
-    let s:toml_dir = s:dein_config_dir . '/toml'
+    let s:toml_dir = $HOME . '/dotfiles/.config/nvim/plugin/dein/toml'
     call dein#load_toml(s:toml_dir . '/dein.toml', { 'lazy': 0 })
     call dein#load_toml(s:toml_dir . '/git.toml', {'lazy': 1 })
     call dein#load_toml(s:toml_dir . '/lsp.toml', { 'lazy': 1 })
