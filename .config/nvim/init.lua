@@ -29,6 +29,12 @@ let g:xdg_data_home   = !empty($XDG_DATA_HOME)
     \ ? $XDG_DATA_HOME
     \ : $HOME . '/.local/share'
 ]]
+
+vim.cmd[[
+set runtimepath+=~/nvim-plugin/ddc-coq
+]]
+  
+
 -- Indent
 vim.opt.tabstop=2
 vim.opt.shiftwidth=2 
@@ -41,7 +47,6 @@ vim.opt.splitright = true
 vim.opt.splitbelow = true
 vim.opt.mouse= 'a'
 vim.opt.number = true
-vim.opt.relativenumber = true
 vim.opt.termguicolors = true
 vim.opt.cursorcolumn = true
 vim.opt.cursorline  = true
@@ -134,3 +139,4 @@ vim.api.nvim_create_autocmd(
     end
   }
 )
+vim.lsp.set_log_level("debug")

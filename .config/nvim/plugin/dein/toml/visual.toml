@@ -22,7 +22,7 @@ repo = 'folke/styler.nvim'
 on_lua = 'nightfox'
 [[plugins]]
 repo = 'nvim-lualine/lualine.nvim'
-on_event = ['CursorHold']
+on_event = ['BufNewFile','BufReadPre']
 hook_post_source = '''
 lua << EOF
 require('lualine').setup {

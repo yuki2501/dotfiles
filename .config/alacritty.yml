@@ -1,17 +1,18 @@
 font:
-    normal:
-        family: PlemolJP35 Console NF
-        style: Text
     bold:
         family: PlemolJP35 Console NF
         style: Bold
-    italic:
-        family: PlemolJP35 Console NF
-        style:  Italic
     bold_italic:
         family: PlemolJP35 Console NF
         style: Bold Italic
-    size: 13.5
+    italic:
+        family: PlemolJP35 Console NF
+        style:  Italic
+    normal:
+        family: PlemolJP35 Console NF
+        style: Text
+    size: 17.5
+
 window:
   opacity: 0.998 
   decorations: buttonless

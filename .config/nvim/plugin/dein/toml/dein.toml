@@ -1,18 +1,20 @@
 
 [[plugins]]
-repo = 'nvim-lua/plenary.nvim'
-
-[[plugins]]
 repo = 'Shougo/dein.vim'
 merged = 0 
 hook_add = '''
 let g:dein#auto_recache = v:true
 '''
 
+[[plugins]]
+repo = 'nvim-lua/plenary.nvim'
+
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
 
 [[plugins]]
 repo = 'rhysd/committia.vim'
-
 
 [[plugins]]
 repo = 'tyru/open-browser.vim'

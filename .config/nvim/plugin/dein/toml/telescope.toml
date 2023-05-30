@@ -6,11 +6,11 @@ hook_add = '''
 nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown({}))<cr>
 nnoremap <leader>bb <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>fw <cmd>lua require('telescope.builtin').live_grep(require('telescope.themes').get_dropdown({}))<cr>
-nnoremap <leader>fc <cmd>lua require('telescope.builtin').git_bcommits(require('telescope.themes').get_dropdown({}))<cr>
 nnoremap <leader>cm <cmd>lua require('telescope.builtin').commands(require('telescope.themes').get_dropdown({}))<cr>
 nnoremap <leader>fst <cmd>lua require('telescope.builtin').git_status(require('telescope.themes').get_dropdown({}))<cr>
 nnoremap <leader>qf  <cmd>Telescope quickfix<cr>
 nnoremap <leader>qs  <cmd>Telescope quickfixhistory<cr>
+nnoremap <leader>da  <cmd>lua require('telescope.builtin').diagnostics(require('telescope.themes').get_dropdown({}))<cr>
 nnoremap " <cmd>lua require('telescope.builtin').registers(require('telescope.themes').get_dropdown({}))<cr>
 '''
 hook_post_source = '''
@@ -30,7 +30,7 @@ require('telescope').setup{
     vimgrep_arguments = vimgrep_arguments,
     mappings = {
       i = {
-      ["<C-f>"] = "send_to_qflist"
+      ["<C-f>"] = 'smart_send_to_qflist' ,
     }}
   },
   pickers = {

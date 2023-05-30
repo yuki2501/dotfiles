@@ -17,7 +17,7 @@ lua << EOF
 require'nvim-treesitter.configs'.setup{
   highlight = {
     enable = true,
-    disable = {"lua","vim","toml","gitcommit"},
+    disable = {"gitcommit"},
   },
 
   incremental_selection = {
@@ -300,4 +300,10 @@ let g:bakaup_auto_backup = 1
 [[plugins]]
 repo = 'kevinhwang91/nvim-bqf'
 on_ft =['qf']
+[[plugins]]
+repo = 'thinca/vim-qfreplace'
+on_ft=['qf']
+hook_add = '''
+nnoremap <silent><leader>qr <cmd>Qfreplace<cr>
+'''
 
