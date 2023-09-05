@@ -58,7 +58,7 @@ vim.cmd[[" Look and Feel
 " All previous modes
 " Automatically wrap left and right
 set colorcolumn=80
-set shell=/usr/local/bin/zsh
+set shell=/bin/zsh
 set cmdheight=0
 "set clipboard = unnamedplus
 nnoremap sj <C-w>j
@@ -139,4 +139,3 @@ vim.api.nvim_create_autocmd(
     end
   }
 )
-vim.lsp.set_log_level("debug")
