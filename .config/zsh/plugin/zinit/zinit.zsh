@@ -28,5 +28,11 @@ zinit ice wait'1' lucid \
     pick'color.zsh'
 zinit light 'seebi/dircolors-solarized'
 
+zinit ice lucid wait"0" depth"1" as"program" src"tms.plugin.zsh" pick"tms"
+zinit light yuki-yano/tms
+
+zinit ice lucid wait"0" depth"1" as"program" src"tmk.plugin.zsh" pick"tmk"
+zinit light yuki-yano/tmk
+
 zinit ice lucid depth"1" blockf
 zinit light yuki-yano/zeno.zsh

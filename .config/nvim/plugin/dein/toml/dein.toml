@@ -22,3 +22,5 @@ repo = 'tyru/open-browser.vim'
 [[plugins]]
 repo = 'whonore/Coqtail'
 
+[[plugins]]
+repo = 'christoomey/vim-tmux-navigator'

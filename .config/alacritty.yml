@@ -11,7 +11,7 @@ font:
     normal:
         family: PlemolJP35 Console NF
         style: Text
-    size: 17.5
+    size: 19.5
 
 window:
   opacity: 0.998 
