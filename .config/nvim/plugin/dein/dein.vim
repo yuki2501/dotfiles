@@ -34,6 +34,7 @@ if dein#min#load_state(s:dein_cache_dir)
     call dein#load_toml(s:toml_dir . '/visual.toml',{'lazy':1})
     call dein#load_toml(s:toml_dir . '/fern.toml', {'lazy':1})
     call dein#load_toml(s:toml_dir . '/ddc.toml', {'lazy':1})
+    call dein#load_toml(s:toml_dir . '/ddu.toml', {'lazy':1})
     call dein#end()
     call dein#save_state()
 endif

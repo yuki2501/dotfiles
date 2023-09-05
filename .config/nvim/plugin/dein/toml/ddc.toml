@@ -59,7 +59,7 @@ depends = 'denops.vim'
 #ddc
 [[plugins]]
 repo = 'Shougo/ddc.vim'
-depends =[ 'denops.vim']
+depends =['denops.vim']
 on_event = ['InsertEnter','CmdlineEnter']
 hook_post_source = '''
 call ddc#custom#patch_global('ui','pum')
