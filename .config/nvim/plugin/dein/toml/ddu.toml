@@ -1,11 +1,32 @@
 [[plugins]]
+repo = 'Shougo/ddu-ui-ff'
+depends = 'denops.vim'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-source-file_rec'
+depends = 'denops.vim'
+on_source = 'ddu.vim'
+
+
+[[plugins]]
+repo = 'Shougo/ddu-kind-file'
+depends = 'denops.vim'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-filter-matcher_substring'
+depends = 'denops.vim'
+on_source = 'ddu.vim'
+[[plugins]]
 repo = 'Shougo/ddu.vim'
+depends = 'denops.vim'
+on_event = 'CursorHold'
 hook_add = '''
 command! DduNodeFiles call ddu#start({"name": "node-files", "sourceOptions": {"file_rec": {"path": getcwd()}}})
 command! DduWholeFiles call ddu#start({"name": "whole-files", "sourceOptions": {"file_rec": {"path": getcwd()}}})
 '''
-depends = 'denops.vim'
-on_cmd = ['DduNodeFiles','DduWholeFiles']
+
 hook_post_source = '''
 " 全体に共通する設定を行う
 call ddu#custom#patch_global({
@@ -43,30 +64,11 @@ call ddu#custom#patch_local("whole-files", {
     \ })
 
 " ddu-ui-ff上でのみ有効なKeymap（`e`）を設定する
-autocmd FileType ddu-ff call s:ddu_ff_settings()
 function s:ddu_ff_settings() abort
     nnoremap <buffer> e <Cmd>call ddu#ui#do_action('itemAction', {'name': 'open'})<CR>
 endfunction
+autocmd FileType ddu-ff call s:ddu_ff_settings()
 '''
 
-[[plugins]]
-repo = 'Shougo/ddu-ui-ff'
-depends = ['denops.vim']
-on_source = 'ddu.vim'
-
-[[plugins]]
-repo = 'Shougo/ddu-source-file_rec'
-depends = ['denops.vim']
-on_source = 'ddu.vim'
-
-[[plugins]]
-repo = 'Shougo/ddu-kind-file'
-depends = ['denops.vim']
-on_source = 'ddu.vim'
-
-[[plugins]]
-repo = 'Shougo/ddu-filter-matcher_substring'
-depends = ['denops.vim']
-on_source = 'ddu.vim'
 
 

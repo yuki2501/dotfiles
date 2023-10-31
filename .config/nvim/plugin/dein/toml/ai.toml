@@ -1,0 +1,6 @@
+# [[plugins]]
+# repo = "github/copilot.vim"
+# on_event = "BufRead"
+
+
+

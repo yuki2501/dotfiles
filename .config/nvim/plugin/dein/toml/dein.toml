@@ -1,26 +1,17 @@
-
-[[plugins]]
-repo = 'Shougo/dein.vim'
-merged = 0 
-hook_add = '''
-let g:dein#auto_recache = v:true
-'''
-
+#[[plugins]]
+#repo = 'Shougo/dein.vim'
+#merged = 0 
 [[plugins]]
 repo = 'nvim-lua/plenary.nvim'
-
 
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'
 
 [[plugins]]
-repo = 'rhysd/committia.vim'
+repo = 'vim-denops/denops.vim'
 
 [[plugins]]
-repo = 'tyru/open-browser.vim'
-
-[[plugins]]
-repo = 'whonore/Coqtail'
-
-[[plugins]]
-repo = 'christoomey/vim-tmux-navigator'
+repo = 'yuki-yano/fuzzy-motion.vim'
+hook_add = '''
+nnoremap <silent> <leader>s <cmd>FuzzyMotion<cr>
+'''

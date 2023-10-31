@@ -20,47 +20,15 @@ colorscheme duskfox
 [[plugins]]
 repo = 'folke/styler.nvim'
 on_lua = 'nightfox'
+
 [[plugins]]
 repo = 'nvim-lualine/lualine.nvim'
-on_event = ['BufNewFile','BufReadPre']
+on_event = ['BufRead','BufNewFile','BufReadPre']
 hook_post_source = '''
 lua << EOF
 require('lualine').setup {
   options = {theme = 'horizon'}
 }
-EOF
-'''
-
-[[plugins]]
-repo = 'mvllow/modes.nvim'
-on_event = ['BufRead']
-hook_source = '''
-lua << EOF
-require('modes').setup({
-	colors = {
-		copy = "#f5c359",
-		delete = "#c75c6a",
-		insert = "#78ccc5",
-		visual = "#9745be",
-	},
-
-	-- Set opacity for cursorline and number background
-	line_opacity = 0.15,
-
-	-- Enable cursor highlights
-	set_cursor = true,
-
-	-- Enable cursorline initially, and disable cursorline for inactive windows
-	-- or ignored filetypes
-	set_cursorline = true,
-
-	-- Enable line number highlights to match cursorline
-	set_number = true,
-
-	-- Disable modes highlights in specified filetypes
-	-- Please PR commonly ignored filetypes
-	ignore_filetypes = { 'NvimTree', 'TelescopePrompt' }
-})
 EOF
 '''
 
@@ -75,7 +43,7 @@ EOF
 
 [[plugins]]
 repo = 'nvim-tree/nvim-web-devicons'
-on_event = ['CursorHold']
+on_event = ['BufRead']
 hook_post_source = '''
 lua << EOF
 require('nvim-web-devicons').setup({
@@ -90,11 +58,3 @@ EOF
 lua require("nvim-web-devicons").get_icons()
 '''
 
-[[plugins]]
-repo = 'petertriho/nvim-scrollbar'
-on_event = ['BufRead']
-hook_post_source = '''
-lua << EOF
-require('scrollbar').setup()
-EOF
-'''

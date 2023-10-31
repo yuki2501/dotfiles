@@ -3,7 +3,7 @@
 repo = 'Shougo/pum.vim'
 on_source = 'ddc.vim'
 depends = 'denops.vim'
-hook_add = '''
+hook_post_source = '''
 inoremap <silent><expr> <TAB>
       \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
       \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
@@ -13,16 +13,18 @@ inoremap <C-n>   <Cmd>call pum#map#select_relative(+1)<CR>
 inoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
 inoremap <C-p>   <Cmd>call pum#map#select_relative(-1)<CR>
 '''
+
 [[plugins]]
 repo = 'matsui54/denops-popup-preview.vim'
 depends = 'denops.vim'
-hook_source = '''
+hook_post_source = '''
 call popup_preview#enable()
 '''
+
 [[plugins]]
 repo = 'matsui54/denops-signature_help'
-depends =['denops.vim','denops-popup-preview.vim']
-hook_source = '''
+depends = ['denops.vim','denops-popup_preview.vim']
+hook_post_source = '''
 let g:signature_help_config = {
       \ 'contentsStyle': "full",
       \ 'viewStyle': "floating"
@@ -34,6 +36,7 @@ call signature_help#enable()
 repo = 'Shougo/ddc-ui-pum'
 on_source = 'ddc.vim'
 depends = 'denops.vim'
+
 #ddc source
 [[plugins]]
 repo = 'Shougo/ddc-source-around'
@@ -43,27 +46,27 @@ on_source = 'ddc.vim'
 [[plugins]]
 repo = 'LumaKernel/ddc-source-file'
 on_source = 'ddc.vim'
-depends = 'denops.vim'
 
 [[plugins]]
 repo = 'Shougo/ddc-source-nvim-lsp'
 on_source = 'ddc.vim'
-depends =['denops.vim','denops-popup-preview.vim','denops-signature_help']
 
 #ddc matchers , sorters, ...
 [[plugins]]
 repo = 'tani/ddc-fuzzy'
 on_source = 'ddc.vim'
-depends = 'denops.vim'
+depdns = 'denops.vim'
+
+
 
 #ddc
 [[plugins]]
 repo = 'Shougo/ddc.vim'
-depends =['denops.vim']
+depends = ['denops.vim']
 on_event = ['InsertEnter','CmdlineEnter']
 hook_post_source = '''
 call ddc#custom#patch_global('ui','pum')
-call ddc#custom#patch_global('sources', ['nvim-lsp','file','around','sample'])
+call ddc#custom#patch_global('sources', ['nvim-lsp','file','around'])
 call ddc#custom#patch_global('sourceOptions', {
   \   '_': {
   \     'matchers': ['matcher_fuzzy'],
@@ -83,6 +86,13 @@ call ddc#custom#patch_global('sourceOptions', {
   \ })
 call ddc#custom#patch_global('sourceParams', {
       \   'around': { 'maxSize': 500 },
+      \   'nvim-lsp': #{
+      \     snippetEngine: denops#callback#register({
+      \           body -> vsnip#anonymous(body)
+      \     }),
+      \     enableResolveItem: v:true,
+      \     enableAdditionalTextEdit: v:true,
+      \   }
       \})
 call ddc#custom#patch_filetype(
     \ ['ps1', 'dosbatch', 'autohotkey', 'registry'], {

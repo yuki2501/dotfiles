@@ -1,17 +1,6 @@
 [[plugins]]
-repo = 'simeji/winresizer'
-on_cmd = 'WinResizerStartResize'
-hook_add = '''
-nnoremap <silent><C-e> <d>WinResizerStartResize<cr>
-let g:winresizer_vert_resize = 1
-let g:winresizer_horiz_resize = 1
-
-'''
-
-[[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
 on_event= ['BufRead']
-hook_post_update = 'TSUpdate'
 hook_post_source = '''
 lua << EOF
 require'nvim-treesitter.configs'.setup{
@@ -19,287 +8,29 @@ require'nvim-treesitter.configs'.setup{
     enable = true,
     disable = {"gitcommit"},
   },
-
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = "gnn",
-      node_incremental = "grn",
-      scope_incremental = "grc",
-      node_decremental = "grm",
-    },
-  },
 }
 EOF
 '''
-[[plugins]]
-repo = 'phaazon/hop.nvim'
-on_event = ['BufRead']
-hook_post_source = '''
-lua << EOF
-require('hop').setup()
-EOF
-'''
-[[plugins]]
-repo = 'mfussenegger/nvim-treehopper'
-on_lua = 'hop'
-hook_add = '''
-omap     <silent> m :<C-U>lua require('tsht').nodes()<CR>
-xnoremap <silent> m :lua require('tsht').nodes()<CR>
-'''
-[[plugins]]
-repo = 'wakatime/vim-wakatime'
-on_event=['BufRead']
 
-[[plugins]]
-repo = 'akinsho/toggleterm.nvim'
-on_cmd = ['ToggleTerm']
-hook_add = '''
-nnoremap <silent><c-\> <Cmd>exe v:count1 . "ToggleTerm"<CR>
-inoremap <silent><c-\> <Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>
-'''
-hook_post_source = '''
-lua << EOF
-require("toggleterm").setup{
-  -- size can be a number or function which is passed the current terminal
-  size =  15,
-  open_mapping = [[<c-\>]],
-  hide_numbers = true, -- hide the number column in toggleterm buffers
-  shade_filetypes = {},
-  shade_terminals = true,
-  start_in_insert = true,
-  insert_mappings = true, -- whether or not the open mapping applies in insert mode
-  terminal_mappings = true, -- whether or not the open mapping applies in the opened terminals
-  persist_size = true,
-  direction = 'horizontal' ,
-  close_on_exit = true, -- close the terminal window when the process exits
-  shell = vim.o.shell, -- change the default shell
-  on_open = function(term)
-    vim.cmd("startinsert!")
-    vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", {noremap = true, silent = true})
-  end,
-}
-EOF
-'''
 
 [[plugins]]
 repo = 'numToStr/Comment.nvim'
 on_event = ['BufRead']
-hook_source = '''
+hook_post_source = '''
 lua << EOF
 require('Comment').setup()
 EOF
 '''
 
 [[plugins]]
-repo = 'vim-denops/denops.vim'
-on_event = ['BufRead']
-
-
-
-[[plugins]]
-repo = 'nvim-treesitter/nvim-treesitter-textobjects'
-on_event = 'BufRead'
-hook_post_source = '''
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  textobjects = {
-    select = {
-      enable = true,
-
-      -- Automatically jump forward to textobj, similar to targets.vim
-      lookahead = true,
-
-      keymaps = {
-        -- You can use the capture groups defined in textobjects.scm
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner",
-        ["ib"] = "@block.inner",
-        ["ab"] = "@block.outer",
-      },
-    },
-    move = {
-      enable = true,
-      set_jumps = true,
-      goto_next_start = {
-        ["]m"] = "@function.outer",
-        ["]]"] = "@class.outer",
-        ["]b"] = "@block.outer",
-      },
-      goto_next_end = {
-        ["]M"] = "@function.outer",
-        ["]["] = "@class.outer",
-        ["]B"] = "@block.outer"
-      },
-      goto_previous_start = {
-        ["[m"] = "@function.outer",
-        ["[["] = "@class.outer",
-        ["[b"] = "@block.outer",
-      },
-      goto_previous_end = {
-        ["[M"] = "@function.outer",
-        ["[]"] = "@class.outer",
-        ["[B"] = "@block.outer",
-      },
-    },
-  },
-}
-EOF
-'''
-[[plugins]]
 repo = 'machakann/vim-sandwich'
 on_event = ['BufRead']
 
-[[plugins]]
-repo = 'yuki-yano/fuzzy-motion.vim'
-on_cmd = 'FuzzyMotion'
-hook_add = '''
-nnoremap <silent> <leader>s <cmd>FuzzyMotion<cr>
-'''
 
-[[plugins]]
-repo = "hkupty/iron.nvim"
-on_cmd = 'IronRepl' 
-hook_add = '''
-nnoremap <silent> <leader>rr <cmd>IronRepl<cr>
-nnoremap <silent> <leader>rf <cmd>IronFocus<cr>
-nnoremap <silent> <leader>rh <cmd>IronHide<cr>
-'''
-hook_post_source = '''
-lua << EOF
-local iron = require("iron.core")
-
-iron.setup {
-  config = {
-    -- If iron should expose `<plug>(...)` mappings for the plugins
-    should_map_plug = false,
-    -- Whether a repl should be discarded or not
-    scratch_repl = true,
-    -- Your repl definitions come here
-    repl_definition = {
-      sh = {
-        command = {"zsh"}
-      },
-      fsharp = {
-        command = {"dotnet", "fsi"}
-      },
-      ocaml = {
-        command = {"utop"}
-      }
-    },
-    repl_open_cmd = require('iron.view').curry.bottom(35),
-    -- how the REPL window will be opened, the default is opening
-    -- a float window of height 40 at the bottom.
-  },
-  -- Iron doesn't set keymaps by default anymore. Set them here
-  -- or use `should_map_plug = true` and map from you vim files
-  keymaps = {
-    send_motion = "<space>sc",
-    visual_send = "<space>sc",
-    send_file = "<space>sf",
-    send_line = "<space>sl",
-    send_mark = "<space>sm",
-    mark_motion = "<space>mc",
-    mark_visual = "<space>mc",
-    remove_mark = "<space>md",
-    cr = "<space>s<cr>",
-    interrupt = "<space>s<space>",
-    exit = "<space>sq",
-    clear = "<space>cl",
-  },
-  -- If the highlight is on, you can change how it looks
-  -- For the available options, check nvim_set_hl
-  highlight = {
-    italic = true
-  }
-}
-EOF
-'''
-
-[[plugins]]
-repo = 'klen/nvim-test'
-on_cmd = ['TestSuite']
-hook_add = '''
-nnoremap <silent> <leader>ts <cmd>TestSuite<cr>
-'''
-hook_post_source = '''
-lua << EOF
-require('nvim-test').setup()
-EOF
-'''
-
-
-[[plugins]]
-repo = 'David-Kunz/treesitter-unit'
-on_event = ['BufRead']
-hook_post_source = '''
-lua << EOF
-vim.api.nvim_set_keymap('x', 'iu', ':lua require"treesitter-unit".select()<CR>', {noremap=true})
-vim.api.nvim_set_keymap('x', 'au', ':lua require"treesitter-unit".select(true)<CR>', {noremap=true})
-vim.api.nvim_set_keymap('o', 'iu', ':<c-u>lua require"treesitter-unit".select()<CR>', {noremap=true})
-vim.api.nvim_set_keymap('o', 'au', ':<c-u>lua require"treesitter-unit".select(true)<CR>', {noremap=true})
-EOF
-'''
-[[plugins]]
-repo = 'kevinhwang91/nvim-hlslens'
-on_lua = 'scrollbar'
-hhok_post_source = '''
-lua << EOF
-require('hlslens').setup({
-       build_position_cb = function(plist, _, _, _)
-            require("scrollbar.handlers.search").handler.show(plist.start_pos)
-       end,
-       calm_down = true
-    })
-
-    vim.cmd([[
-        augroup scrollbar_search_hide
-            autocmd!
-            autocmd CmdlineLeave : lua require('scrollbar.handlers.search').handler.hide()
-        augroup END
-    ]])
-
-local kopts = {noremap = true, silent = true}
-
-vim.api.nvim_set_keymap('n', 'n',
-    [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
-    kopts)
-vim.api.nvim_set_keymap('n', 'N',
-    [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
-    kopts)
-vim.api.nvim_set_keymap('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
-vim.api.nvim_set_keymap('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
-vim.api.nvim_set_keymap('n', 'g*', [[g*<Cmd>lua require('hlslens').start()<CR>]], kopts)
-vim.api.nvim_set_keymap('n', 'g#', [[g#<Cmd>lua require('hlslens').start()<CR>]], kopts)
-
-vim.api.nvim_set_keymap('n', '<Leader>l', '<Cmd>noh<CR>', kopts)
-EOF
-'''
-
-[[plugins]]
-repo = 'aiya000/aho-bakaup.vim'
-on_event = ['BufRead']
-on_cmd = [
-    'w',
-    'write',
-    'BakaupBackupExecute',
-    'BakaupEnable',
-    'BakaupDisable',
-    'BakaupArchiveBackups',
-    'BakaupSetBackupDir',
-    'BakaupExplore',
-    'BakaupTexplore',
-    'BakaupVexplore',
-    'BakaupSexplore',
-]
-hook_source = '''
-let g:bakaup_auto_backup = 1
-'''
 [[plugins]]
 repo = 'kevinhwang91/nvim-bqf'
 on_ft =['qf']
+
 [[plugins]]
 repo = 'thinca/vim-qfreplace'
 on_ft=['qf']

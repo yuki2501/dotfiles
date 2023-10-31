@@ -15,35 +15,35 @@ endif
 " Add the dein installation directory into runtimepath
 execute 'set rtp+=' . s:dein_repo_dir
 " GitHub API Key
-if !filereadable(expand(s:dein_github_api_token_file))
-    call writefile(["let g:dein#install_github_api_token = ''"],s:dein_github_api_token_file)
-endif
-if file_readable(expand(s:dein_github_api_token_file))
+if filereadable(s:dein_github_api_token_file)
   let g:dein#install_github_api_token = readfile(s:dein_github_api_token_file)[0]
 endif
+
 
 if dein#min#load_state(s:dein_cache_dir)
     call dein#begin(s:dein_cache_dir)
     let s:toml_dir = $HOME . '/dotfiles/.config/nvim/plugin/dein/toml'
     call dein#load_toml(s:toml_dir . '/dein.toml', { 'lazy': 0 })
-    call dein#load_toml(s:toml_dir . '/git.toml', {'lazy': 1 })
-    call dein#load_toml(s:toml_dir . '/lsp.toml', { 'lazy': 1 })
-    call dein#load_toml(s:toml_dir . '/dein_lazy.toml', { 'lazy': 1 })
-    call dein#load_toml(s:toml_dir . '/filetype.toml',{'lazy':1})
-    call dein#load_toml(s:toml_dir . '/telescope.toml',{'lazy':1})
-    call dein#load_toml(s:toml_dir . '/visual.toml',{'lazy':1})
-    call dein#load_toml(s:toml_dir . '/fern.toml', {'lazy':1})
-    call dein#load_toml(s:toml_dir . '/ddc.toml', {'lazy':1})
-    call dein#load_toml(s:toml_dir . '/ddu.toml', {'lazy':1})
+"    call dein#load_toml(s:toml_dir . '/git.toml', {'lazy': 0 })
+"    call dein#load_toml(s:toml_dir . '/lsp.toml', { 'lazy': 1 })
+"    call dein#load_toml(s:toml_dir . '/dein_lazy.toml', { 'lazy': 1 })
+"    call dein#load_toml(s:toml_dir . '/filetype.toml',{'lazy':1})
+"    call dein#load_toml(s:toml_dir . '/visual.toml',{'lazy':1})
+"    call dein#load_toml(s:toml_dir . '/fern.toml', {'lazy':1})
+"    call dein#load_toml(s:toml_dir . '/ddc.toml', {'lazy':0})
+"    call dein#load_toml(s:toml_dir . '/ddu.toml', {'lazy':0})
     call dein#end()
     call dein#save_state()
 endif
 
-filetype plugin indent on
-syntax enable
+filetype indent plugin on
 
+if has('syntax')
+  syntax on
+endif
+
+let g:dein#auto_recache = v:true
 if dein#check_install()
   call dein#check_update(v:true)
   call map(dein#check_clean(),"delete(v:val, 'rf')")
 endif
-

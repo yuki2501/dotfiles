@@ -13,39 +13,3 @@ augroup fern-custom
 augroup END
 '''
 
-
-[[plugins]]
-repo = 'yuki-yano/fern-preview.vim'
-depends = ['fern.vim']
-hook_add = '''
-function! s:fern_settings() abort
-  nmap <silent> <buffer> p     <Plug>(fern-action-preview:toggle)
-  nmap <silent> <buffer> <C-p> <Plug>(fern-action-preview:auto:toggle)
-  nmap <silent> <buffer> <C-d> <Plug>(fern-action-preview:scroll:down:half)
-  nmap <silent> <buffer> <C-u> <Plug>(fern-action-preview:scroll:up:half)
-endfunction
-'''
-hook_source = '''
-augroup fern-settings
-  autocmd!
-  autocmd FileType fern call s:fern_settings()
-augroup END
-'''
-
-[[plugins]]
-repo = 'TheLeoP/fern-renderer-web-devicons.nvim'
-depends = ['fern.vim','nvim-web-devicons']
-hook_source = '''
-let g:fern#renderer = 'nvim-web-devicons'
-'''
-
-[[plugins]]
-repo = 'lambdalisue/glyph-palette.vim'
-depends = ['fern.vim','nvim-web-devicons','fern-renderer-web-devicons']
-hook_post_source = '''
-augroup my-glyph-palette
-  autocmd! *
-  autocmd FileType fern call glyph_palette#apply()
-  autocmd FileType nerdtree,startify call glyph_palette#apply()
-augroup END
-'''

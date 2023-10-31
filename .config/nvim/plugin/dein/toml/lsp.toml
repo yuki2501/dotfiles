@@ -1,146 +1,46 @@
 [[plugins]]
-repo = 'williamboman/mason-lspconfig.nvim'
-depends = [
-    'mason.nvim',
-    'nvim-lspconfig',
-    'ddc-source-nvim-lsp',
-]
-on_event = ['BufRead', 'BufNewFile']
-lua_post_source = '''
-local api = vim.api
-local lspconfig = require("lspconfig")
-local servers = {
-  "tsserver",
-  "ocamllsp",
-  "denols",
-  "vimls",
-  "rust_analyzer",
-}
-
-require("mason-lspconfig").setup({
-  ensure_installed = servers,
-  automatic_installation = true,
-})
- local function on_attach(_, bufnr)
-   local buf_map = function(lhs, rhs)
-     vim.keymap.set("n", lhs, rhs, { buffer = bufnr })
-   end
-   buf_map("K", vim.lsp.buf.hover)
-   buf_map("gd",vim.lsp.buf.definition)
-   buf_map("gt",vim.lsp.buf.type_definition)
-   buf_map("[d", vim.diagnostic.goto_prev)
-   buf_map("]d", vim.diagnostic.goto_next)
-   buf_map('<space>q', vim.diagnostic.setloclist)
-   buf_map('ge', vim.diagnostic.open_float)
-   buf_map("mf", vim.lsp.buf.formatting)
-   buf_map("<leader>rn", vim.lsp.buf.rename)
- end
- require("mason-lspconfig").setup_handlers({
-   function(server_name)
-     lspconfig[server_name].setup{
-       on_attach = on_attach
-     }
-   end,
- }) 
-'''
-
-[[plugins]]
-repo = 'jose-elias-alvarez/null-ls.nvim'
-on_event = ['BufNewFile','BufReadPre']
-
-[[plugins]]
-repo = 'jay-babu/mason-null-ls.nvim'
-on_event = ['BufNewFile','BufReadPre']
-depends = ['null-ls.nvim','mason.nvim']
-lua_post_source = '''
-  local null_ls = require("null-ls")
-  null_ls.setup({
-    sources = {
-      null_ls.builtins.diagnostics.eslint.with({
-        diagnostics_postprocess = function(diagnostic)
-          diagnostic.severity = vim.diagnostic.severity["WARN"]
-        end
-      }),
-      null_ls.builtins.formatting.prettier,
-      null_ls.builtins.formatting.ocamlformat,
-    }    
-  })
-require("mason-null-ls").setup({
-  automatic_setup = true,
-  })
-'''
-
-
-[[plugins]]
-repo = 'williamboman/mason.nvim'
-on_cmd = 'Mason'
-lua_post_source = '''
-    require("mason").setup()
-'''
-
-[[plugins]]
 repo = 'neovim/nvim-lspconfig'
-on_event = 'BufRead'
+on_event = ['CursorHold']
+hook_add = '''
+lua << EOF
+vim.lsp.set_log_level("debug")
+EOF
+'''
+hook_post_source = '''
+lua << EOF
+local lspconfig = require('lspconfig')
+local api = vim.api
+lspconfig.ocamllsp.setup{}
+lspconfig.rnix.setup{}
 
-[[plugins]]
-repo = 'tomtomjhj/coq-lsp.nvim'
-on_ft = ['coq']
-lua_post_source = '''
-local api = vim.api
-local function on_attach(_, bufnr)
- local buf_map = function(lhs, rhs)
-   vim.keymap.set("n", lhs, rhs, { buffer = bufnr })
- end
- buf_map("K", vim.lsp.buf.hover)
- buf_map("gd",vim.lsp.buf.definition)
- buf_map("gt",vim.lsp.buf.type_definition)
- buf_map("[d", vim.diagnostic.goto_prev)
- buf_map("]d", vim.diagnostic.goto_next)
- buf_map('<space>q', vim.diagnostic.setloclist)
- buf_map('ge', vim.diagnostic.open_float)
- buf_map("<leader>rn", vim.lsp.buf.rename)
- buf_map("mf", vim.lsp.buf.formatting)
-end
-require'coq-lsp'.setup{
-  lsp = {
-    on_attach = on_attach,
-    init_options = {
-      show_notices_as_diagnostics = true,
-    }
-  }
-}
-'''
-[[plugins]]
-repo = 'scalameta/nvim-metals'
-on_ft = ['scala']
-depends = 'plenary.nvim'
-lua_post_source = '''
-local api = vim.api
-local buf_map = function(lhs, rhs)
-  vim.keymap.set("n", lhs, rhs, { buffer = bufnr })
-end
-buf_map("K", vim.lsp.buf.hover)
-buf_map("gd",vim.lsp.buf.definition)
-buf_map("gt",vim.lsp.buf.type_definition)
-buf_map("[d", vim.diagnostic.goto_prev)
-buf_map("]d", vim.diagnostic.goto_next)
-buf_map("<leader>rn", vim.lsp.buf.rename)
-local metals_config = require("metals").bare_config()
--- Example of settings
-metals_config.settings = {
-  showImplicitArguments = true,
-  excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
-}
--- Autocmd that will actually be in charging of starting the whole thing
-local nvim_metals_group = api.nvim_create_augroup("nvim-metals", { clear = true })
-api.nvim_create_autocmd("FileType", {
-  -- NOTE: You may or may not want java included here. You will need it if you
-  -- want basic Java support but it may also conflict if you are using
-  -- something like nvim-jdtls which also works on a java filetype autocmd.
-  pattern = { "scala", "sbt", "java" },
-  callback = function()
-    require("metals").initialize_or_attach(metals_config)
+-- Global mappings.
+-- See `:help vim.diagnostic.*` for documentation on any of the below functions
+vim.keymap.set('n', 'ge', vim.diagnostic.open_float)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+  callback = function(ev)
+
+    -- Buffer local mappings.
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    local opts = { buffer = ev.buf }
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+    vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+    vim.keymap.set('n', '<leader>f', function()
+      vim.lsp.buf.format { async = true }
+    end, opts)
   end,
-  group = nvim_metals_group,
 })
+EOF
 '''
+

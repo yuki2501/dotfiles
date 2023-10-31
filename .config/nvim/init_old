@@ -53,7 +53,6 @@ vim.opt.cursorline  = true
 vim.opt.pumblend=10
 vim.opt.winblend=15
 vim.o.whichwrap = 'b,s,h,l,<,>,[,]'
-pcall(require,"plugin.dein.dein")
 vim.cmd[[" Look and Feel
 " All previous modes
 " Automatically wrap left and right
@@ -78,20 +77,5 @@ let g:python3_host_prog = '/Users/yuki/.pyenv/shims/python3.11'
 nnoremap <silent><leader>co <cmd>copen<cr>
 nnoremap <silent><leader>ccl <cmd>ccl<cr>
 nnoremap <silent><leader>n <cmd>noh<cr>
-
-let s:toml_dir = $HOME . '/dotfiles/.config/nvim/plugin/dein/toml'
-packadd vim-jetpack
-call jetpack#begin()
-call jetpack#add('tani/vim-jetpack', {'opt': 1}) "bootstrap
-call jetpack#load_toml(s:toml_dir . '/dein.toml')
-call jetpack#load_toml(s:toml_dir . '/dein_lazy.toml')
-call jetpack#load_toml(s:toml_dir . '/ddc.toml')
-call jetpack#load_toml(s:toml_dir . '/ddu.toml')
-call jetpack#load_toml(s:toml_dir . '/visual.toml')
-call jetpack#load_toml(s:toml_dir . '/lsp.toml')
-call jetpack#load_toml(s:toml_dir . '/fern.toml')
-call jetpack#load_toml(s:toml_dir . '/git.toml')
-call jetpack#load_toml(s:toml_dir . '/filetype.toml')
-call jetpack#end()
 ]]
 
