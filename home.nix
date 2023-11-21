@@ -12,26 +12,38 @@ let
       };
     };
   };
+  tex = (pkgs.texlive.combine {
+    inherit (pkgs.texlive) scheme-basic
+    bussproofs latexmk collection-latexextra collection-langjapanese collection-fontsrecommended ;
+  });
+  pkgsUnstable = import <nixpkgs-unstable> {};
 in
 {
   home.username = "yuki";
   home.homeDirectory = "/Users/yuki";
-  home.stateVersion = "22.05";
+  home.stateVersion = "23.05";
   home.packages = [
     pkgs.ripgrep
     pkgs.joshuto
     pkgs.glow
+    pkgsUnstable.eza
+    tex
     duckgoFlake.x86_64-darwin.defaultPackage
   ];
   programs.home-manager = {
     enable = true;
   };
 
+  programs.yt-dlp = {
+    enable = true;
+  }; 
+
   programs.direnv = {
     enable = true;
     enableZshIntegration = true;
     nix-direnv.enable = true;
   };
+
 
   programs.git = {
     enable = true;
@@ -112,12 +124,6 @@ in
     defaultOptions = ["--reverse"];
   };
 
-  programs.exa = {
-    enable = true;
-    extraOptions = [
-      "--all"
-    ];
-  };
 
   programs.bat = {
     enable = true;
@@ -202,9 +208,7 @@ in
     
   };
 
-  programs.yt-dlp = {
-    enable = true;
-  };
+
   programs.zsh = {
     enable = true;
     completionInit = "autoload -U";
@@ -243,6 +247,7 @@ in
       cp = "cp -i";
       mv = "mv -i";
       rm = "rm -i";
+      eza = "eza --all";
       f = "joshuto";
       hm = "home-manager";
     };
