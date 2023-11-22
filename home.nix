@@ -27,6 +27,7 @@ in
     pkgs.joshuto
     pkgs.glow
     pkgsUnstable.eza
+    pkgsUnstable.neovim
     tex
     duckgoFlake.x86_64-darwin.defaultPackage
   ];
