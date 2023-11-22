@@ -1,35 +1,32 @@
-[[plugins]]
+[vertical[plugins]]
 repo = 'Shougo/ddu-ui-ff'
-depends = 'denops.vim'
-on_source = 'ddu.vim'
 
 [[plugins]]
 repo = 'Shougo/ddu-source-file_rec'
-depends = 'denops.vim'
-on_source = 'ddu.vim'
 
+[[plugins]]
+repo = 'uga-rosa/ddu-filter-converter_devicon'
 
 [[plugins]]
 repo = 'Shougo/ddu-kind-file'
-depends = 'denops.vim'
-on_source = 'ddu.vim'
 
 [[plugins]]
 repo = 'shun/ddu-source-rg'
-depends = 'denops.vim'
-on_source = 'ddu.vim'
 
 [[plugins]]
 repo = 'Shougo/ddu-filter-matcher_substring'
-depends = 'denops.vim'
-on_source = 'ddu.vim'
+[[plugins]]
+repo = 'Milly/ddu-filter-kensaku'
+
+[[plugins]]
+repo = 'Shougo/ddu-source-line'
 
 [[plugins]]
 repo = 'Shougo/ddu.vim'
-depends = 'denops.vim'
-on_event = 'CursorHold'
 hook_add = '''
 nnoremap <silent><leader>ff <cmd>call ddu#start({"name": "node-files", "sourceOptions": {"file_rec": {"path": getcwd()}}})<CR>
+nnoremap <silent><leader>l <cmd> call ddu#start({"name": "lines"})<cr>
+inoremap <silent><C-l> <cmd> call ddu#start({"name": "lines"})<cr>
 command! DduWholeFiles call ddu#start({"name": "whole-files", "sourceOptions": {"file_rec": {"path": getcwd()}}})
 nnoremap <silent><leader>fw <Cmd>call ddu#start({
 \   'sources':[
@@ -44,12 +41,14 @@ call ddu#custom#patch_global({
     \     "ui": "ff",
     \     "uiParams": {
     \       "ff" : {
+    \          "autoAction" : {"name": "preview", "delay":0},
     \          "filterFloatingPosition" : "bottom",
     \          "filterSplitDirection" : "floating",
     \          "floatingBorder" : "rounded",
+    \          "startAutoAction" : v:true,
     \          "previewFloating" : v:true,
     \          "previewFloatingBorder" : "rounded",
-    \          "previewFloatingTitle" : "preview",
+    \          "previewFloatingTitle" : "Preview",
     \          "previewSplit" : "horizontal",
     \          "prompt" : "> ",
     \          "split" : "floating",
@@ -58,9 +57,19 @@ call ddu#custom#patch_global({
     \     },
     \     "sourceOptions": {
     \         "_": {
-    \             "matchers": ["matcher_substring"]
+    \             "matchers": ["matcher_kensaku"]
     \         }
-    \     }
+    \     },
+    \     "filterParams": {
+    \         "matcher_kensaku": {
+    \             "highlightMatched": "Search",
+    \         },
+    \     },
+    \     "kindOptions": {
+    \         "file": {
+    \             "defaultAction": "open",
+    \         },
+    \     },
     \ })
 
 " ddunodefilesで使用する設定を用意する
@@ -74,6 +83,12 @@ call ddu#custom#patch_local("node-files", {
     \             "ignoredDirectories": [".git", "node_modules"],
     \         }
     \     }
+    \ })
+
+call ddu#custom#patch_local("lines", {
+    \     "sources":[{
+    \        "name":"line",
+    \     }],
     \ })
 
 " dduwholefilesで使用する設定を用意する
@@ -108,13 +123,15 @@ call ddu#custom#patch_local("grep", {
     nnoremap <buffer>e<cmd>call ddu#ui#do_action('itemAction', {'name': 'open'})<cr>
     nnoremap <buffer> <cr> <esc><cmd>close<cr>
     inoremap <buffer> <cr> <esc><cmd>close<cr>
-    nnoremap <buffer> q <cmd>call ddu#ui#ff#do_action("quit")<cr>
+    inoremap <buffer> <C-n> call ddu#ui#do_action("cursorNext")<cr>
+    inoremap <buffer> <C-p> call ddu#ui#do_action("cursorPrevious")<cr>
+    nnoremap <buffer> q <cmd>call ddu#ui#do_action("quit")<cr>
  endfunction
  function s:ddu_ff_settings() abort
-    nnoremap <buffer> q <cmd>call ddu#ui#ff#do_action("quit")<cr>
-    nnoremap <buffer> <cr> <cmd>call ddu#ui#ff#do_action('itemAction',{'name': 'open'})<cr>
-    nnoremap <buffer> i <cmd>call ddu#ui#ff#do_action("openFilterWindow")<cr>
-    nnoremap <buffer> p <cmd>call ddu#ui#ff#do_action("togglePreview")<cr>
+    nnoremap <buffer> q <cmd>call ddu#ui#do_action("quit")<cr>
+    nnoremap <buffer> <cr> <cmd>call ddu#ui#do_action('itemAction',{'name': 'open'})<cr>
+    nnoremap <buffer> i <cmd>call ddu#ui#do_action("openFilterWindow")<cr>
+    nnoremap <buffer> p <cmd> call ddu#ui#do_action("togglePreview")<cr>
  endfunction
 autocmd filetype ddu-ff call s:ddu_ff_settings()
 autocmd filetype ddu-ff-filter call s:ddu_ff_filter_settings()

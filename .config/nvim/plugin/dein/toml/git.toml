@@ -5,8 +5,3 @@ nnoremap <silent><leader>gs <cmd>GinStatus<cr>
 nnoremap <silent><leader>gcm <cmd>Gin commit<cr>
 '''
 
-[[plugins]]
-repo = 'lambdalisue/kensaku.vim'
-
-[[plugins]]
-repo = 'lambdalisue/kensaku-search.vim'

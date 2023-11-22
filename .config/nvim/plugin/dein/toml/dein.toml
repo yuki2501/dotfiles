@@ -14,4 +14,14 @@ repo = 'vim-denops/denops.vim'
 repo = 'yuki-yano/fuzzy-motion.vim'
 hook_add = '''
 nnoremap <silent> <leader>s <cmd>FuzzyMotion<cr>
+let g:fuzzy_motion_matchers = ['fzf','kensaku']
+'''
+
+[[plugins]]
+repo = 'lambdalisue/kensaku.vim'
+
+[[plugins]]
+repo = 'lambdalisue/kensaku-search.vim'
+hook_post_source = '''
+cnoremap <CR> <Plug>(kensaku-search-replace)<CR>
 '''

@@ -25,7 +25,38 @@ EOF
 [[plugins]]
 repo = 'machakann/vim-sandwich'
 on_event = ['BufRead']
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+on_event = ['BufRead']
+hook_add = '''
+nnoremap <leader>r <cmd>QuickRun<cr>
+autocmd FileType tex let g:quickrun_config = {
+\   'tex': {
+\     'command': 'latexmk',
+\     'cmdopt': '-lualatex -pv',
+\     'outputter' : 'error',
+\     'outputter/error/success': 'null',
+\     'outputter/error/error': 'quickfix',
+\     'srcfile' : expand("%:p"),
+\     'exec': '%c %o %s',
+\     'hook/sweep/files':[
+\                      '%S:p:r.aux',
+\                      '%S:p:r.bbl',
+\                      '%S:p:r.blg',
+\                      '%S:p:r.dvi',
+\                      '%S:p:r.fdb_latexmk',
+\                      '%S:p:r.fls',
+\                      '%S:p:r.log',
+\                      '%S:p:r.out'
+\                      ],
+\   }
+\ }
+autocmd BufWritePost, FileWritePost *.tex QuickRun
+'''
 
+[[plugins]]
+repo = 'thinca/vim-ambicmd'
+on_event = ['CmdlineEnter']
 
 [[plugins]]
 repo = 'kevinhwang91/nvim-bqf'
@@ -37,4 +68,6 @@ on_ft=['qf']
 hook_add = '''
 nnoremap <silent><leader>qr <cmd>Qfreplace<cr>
 '''
+
+
 

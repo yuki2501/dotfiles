@@ -12,6 +12,7 @@ local lspconfig = require('lspconfig')
 local api = vim.api
 lspconfig.ocamllsp.setup{}
 lspconfig.rnix.setup{}
+lspconfig.texlab.setup{}
 
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
