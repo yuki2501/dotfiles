@@ -80,7 +80,7 @@ call ddu#custom#patch_local("node-files", {
     \     }],
     \     "sourceParams": {
     \         "file_rec": {
-    \             "ignoredDirectories": [".git", "node_modules"],
+    \             "ignoredDirectories": [".git", "node_modules", "_build"],
     \         }
     \     }
     \ })
