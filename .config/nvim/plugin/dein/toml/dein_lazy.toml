@@ -50,6 +50,7 @@ let g:quickrun_config = {
 \                      '%S:p:r.out'
 \                      ],
 \   },
+\   '_':{},
 \  }
 let g:quickrun_config.tmptex = {
 \
@@ -81,10 +82,19 @@ let g:quickrun_config.tmptex = {
 \                        ],
 \}
 \
-autocmd FileType tex vnoremap <leader>rt <cmd>QuickRun tmptex<cr> 
+if has('nvim')
+  " Use 'neovim_job' in Neovim
+  let g:quickrun_config._.runner = 'neovim_job'
+elseif exists('*ch_close_in')
+  " Use 'job' in Vim which support job feature
+  let g:quickrun_config._.runner = 'job'
+endif
+autocmd FileType tex vnoremap <leader>rr <cmd>QuickRun tmptex<cr> 
 autocmd BufWritePost, FileWritePost *.tex QuickRun
 '''
-
+[[plugins]]
+repo = 'lambdalisue/vim-quickrun-neovim-job'
+on_source = 'vim-quickrun'
 
 [[plugins]]
 repo = 'thinca/vim-ambicmd'
