@@ -25,3 +25,15 @@ repo = 'lambdalisue/kensaku-search.vim'
 hook_post_source = '''
 cnoremap <CR> <Plug>(kensaku-search-replace)<CR>
 '''
+
+[[plugins]]
+repo = 'vim-skk/skkeleton'
+hook_post_source = '''
+imap <C-j> <Plug>(skkeleton-enable)
+cmap <C-j> <Plug>(skkeleton-enable)
+tmap <C-j> <Plug>(skkeleton-enable)
+call skkeleton#config({
+  \ 'globalDictionaries': ['~/.skkeleton/SKK-JISYO.L'],
+  \ 'keepState': v:false,
+  \ })
+'''

@@ -66,12 +66,20 @@ depends = ['denops.vim']
 on_event = ['InsertEnter','CmdlineEnter']
 hook_post_source = '''
 call ddc#custom#patch_global('ui','pum')
-call ddc#custom#patch_global('sources', ['lsp','file','around'])
+call ddc#custom#patch_global('sources', ['lsp','file','around','skkeleton'])
 call ddc#custom#patch_global('sourceOptions', {
   \   '_': {
   \     'matchers': ['matcher_fuzzy'],
   \     'sorters': ['sorter_fuzzy'],
   \     'converters': ['converter_fuzzy']
+  \   },
+  \   'skkeleton': {
+  \     'mark': 'skkeleton',
+  \     'matchers': [],
+  \     'sorters': [],
+  \     'converters': [],
+  \     'isVolatile': v:true,
+  \     'minAutoCompleteLength': 1,
   \   },
   \   'around': { 'mark': 'A' },
   \   'file': {
