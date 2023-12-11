@@ -235,6 +235,7 @@ in
        else
          eval "$(/usr/local/bin/brew shellenv)"
        fi
+       export EDITOR=nvim
     '';
     history = {
       extended = true;
