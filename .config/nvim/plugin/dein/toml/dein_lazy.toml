@@ -14,6 +14,28 @@ EOF
 
 
 [[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter-context'
+on_event= ['BufRead']
+hook_post_source = '''
+lua << EOF
+require'treesitter-context'.setup{
+  enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+  max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+  min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+  line_numbers = true,
+  multiline_threshold = 20, -- Maximum number of lines to show for a single context
+  trim_scope = 'outer', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+  mode = 'cursor',  -- Line used to calculate context. Choices: 'cursor', 'topline'
+  -- Separator between context and content. Should be a single character string, like '-'.
+  -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
+  separator = nil,
+  zindex = 20, -- The Z-index of the context window
+  on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
+}
+EOF
+'''
+
+[[plugins]]
 repo = 'numToStr/Comment.nvim'
 on_event = ['BufRead']
 hook_post_source = '''
@@ -25,6 +47,27 @@ EOF
 [[plugins]]
 repo = 'machakann/vim-sandwich'
 on_event = ['BufRead']
+
+[[plugins]]
+repo = 'cohama/lexima.vim'
+on_event = ['InsertEnter']
+hook_post_source = '''
+set magic
+call lexima#add_rule({ 
+  \ 'filetype': 'tex', 
+  \ 'char': '}', 
+  \ 'at': '\\begin{\(\w\+\)\%#}',
+  \ 'leave': 1,
+  \ 'input_after': '<CR>\\end{\1}',
+  \ 'with_submatch': 1})
+call lexima#add_rule({
+  \ 'char': '$',
+  \ 'input_after': '$',
+  \ 'filetype': 'tex'
+  \ })
+'''
+
+
 [[plugins]]
 repo = 'thinca/vim-quickrun'
 on_event = ['BufRead']
@@ -34,7 +77,7 @@ let g:quickrun_config = {
 \  'tex':{
 \     'command' : 'latexmk',
 \     'outputter' : 'error',
-\     'outputter/error/success': 'null',
+\     'outputter/error/success': 'quickfix',
 \     'outputter/error/error': 'quickfix',
 \     'srcfile' : '%{expand("%")}',
 \     'cmdopt': '-lualatex -pv',
