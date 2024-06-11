@@ -29,11 +29,7 @@ let g:xdg_data_home   = !empty($XDG_DATA_HOME)
     \ ? $XDG_DATA_HOME
     \ : $HOME . '/.local/share'
 ]]
-
--- vim.cmd[[
--- set runtimepath+=~/nvim-plugin/ddc-coq
--- ]]
-  
+ 
 
 -- Indent
 vim.opt.tabstop=2

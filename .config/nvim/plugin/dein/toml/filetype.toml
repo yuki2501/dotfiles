@@ -29,6 +29,9 @@ repo = 'osyo-manga/vim-precious'
 depends = ['context_filetype.vim']
 on_source= ['context_filetype.vim']
 
+[[plugins]]
+repo = 'whonore/Coqtail'
+on_event = 'CursorHold'
 
 [[plugins]]
 repo = 'thinca/vim-partedit'

@@ -1,4 +1,3 @@
-#completion framework
 [[plugins]]
 repo = 'Shougo/pum.vim'
 on_source = 'ddc.vim'
@@ -10,8 +9,10 @@ inoremap <silent><expr> <TAB>
       \ '<TAB>' : ddc#manual_complete()
 inoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
 inoremap <C-n>   <Cmd>call pum#map#select_relative(+1)<CR>
-inoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
 inoremap <C-p>   <Cmd>call pum#map#select_relative(-1)<CR>
+inoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
+inoremap <silent><expr> <CR> pum#visible() ? "\<Cmd>call pum#map#confirm()\<CR>" :
+\ "\<C-r>=lexima#expand('<LT>CR>', 'i')\<CR>"
 '''
 
 [[plugins]]
@@ -55,9 +56,11 @@ on_source = 'ddc.vim'
 [[plugins]]
 repo = 'tani/ddc-fuzzy'
 on_source = 'ddc.vim'
-depdns = 'denops.vim'
 
 
+[[plugins]]
+repo = 'yuki2501/ddc-source-coq-unicode'
+on_source = 'ddc.vim'
 
 #ddc
 [[plugins]]
@@ -66,7 +69,7 @@ depends = ['denops.vim']
 on_event = ['InsertEnter','CmdlineEnter']
 hook_post_source = '''
 call ddc#custom#patch_global('ui','pum')
-call ddc#custom#patch_global('sources', ['lsp','file','around','skkeleton'])
+call ddc#custom#patch_global('sources', ['lsp','file','around','skkeleton','coqUnicode'])
 call ddc#custom#patch_global('sourceOptions', {
   \   '_': {
   \     'matchers': ['matcher_fuzzy'],
@@ -82,6 +85,11 @@ call ddc#custom#patch_global('sourceOptions', {
   \     'minAutoCompleteLength': 1,
   \   },
   \   'around': { 'mark': 'A' },
+  \   'coqUnicode': {
+  \     'mark': 'coq-unicode',
+  \     'matchers':['coq-unicode'],
+  \     'keywordPattern':'[a-zA-Z-<>\\/]*',
+  \   },
   \   'file': {
   \     'mark': 'F',
   \     'isVolatile': v:true,

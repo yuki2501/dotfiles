@@ -8,6 +8,7 @@ local api = vim.api
 lspconfig.ocamllsp.setup{}
 lspconfig.rnix.setup{}
 lspconfig.texlab.setup{}
+lspconfig.tsserver.setup{}
 
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -40,3 +41,26 @@ vim.api.nvim_create_autocmd('LspAttach', {
 EOF
 '''
 
+
+[[plugins]]
+repo = 'tomtomjhj/coq-lsp.nvim'
+on_event = 'CursorHold'
+hook_add = '''
+let g:loaded_coqtail = 1
+let g:coqtail#supported = 0
+'''
+hook_source = '''
+lua << EOF
+require'coq-lsp'.setup {
+  lsp = {
+    on_attach = function(client,bufnr)
+    end,
+
+    init_options = {
+      show_notices_as_diagnostics = true,
+    },
+    autostart = true,
+  },
+}
+EOF
+'''
