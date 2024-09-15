@@ -24,11 +24,10 @@
         ];
         specialArgs = { 
           inherit (nixpkgs) lib; 
-          inherit neovim-nightly-overlay;
         };
       };
     in {
-      darwinConfigurations.${darwinHost} = mkDarwinSystem {
+      darwinConfigurations.yukimbp16 = mkDarwinSystem {
         hostname = darwinHost;
         username = darwinUser;
       };

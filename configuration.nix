@@ -90,6 +90,9 @@
     onActivation = {
       autoUpdate = true;
     };
+    brews = [
+      "deno"
+    ];
     casks = [
       "raycast"
       "karabiner-elements"
