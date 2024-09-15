@@ -27,7 +27,7 @@
         };
       };
     in {
-      darwinConfigurations.yukimbp16 = mkDarwinSystem {
+      darwinConfigurations.${darwinHost} = mkDarwinSystem {
         hostname = darwinHost;
         username = darwinUser;
       };
