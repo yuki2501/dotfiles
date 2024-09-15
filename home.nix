@@ -216,7 +216,7 @@ in
     '';
     history = {
       extended = true;
-      path = "${username}/.config/zsh/.zsh_history";
+      path = "/Users/${username}/.config/zsh/.zsh_history";
       save = 1000000;
       size = 1000000;
     };
