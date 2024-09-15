@@ -1,35 +1,31 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, lib, neovim-nightly-overlay, ... }:
 let
-  duckgoFlakeFunction = import ./tools/duckgo/flake.nix; 
-  duckgoFlake = duckgoFlakeFunction.outputs {
-    self = {};
-    nixpkgs = import <nixpkgs> { };
-    flake-utils = {
-      lib = {
-        eachDefaultSystem = f: {
-          x86_64-darwin = f "x86_64-darwin";
-        };
-      };
-    };
-  };
   tex = (pkgs.texlive.combine {
     inherit (pkgs.texlive) scheme-basic
     bussproofs latexmk collection-latexextra collection-langjapanese collection-fontsrecommended ;
   });
-  pkgsUnstable = import <nixpkgs-unstable> {};
+  username = "yuki_saito";
 in
 {
-  home.username = "yuki";
-  home.homeDirectory = "/Users/yuki";
-  home.stateVersion = "23.05";
+  nixpkgs = {
+    overlays = [
+      neovim-nightly-overlay.overlays.default
+    ];
+    config = {
+      allowUnfree = true;
+    };
+  };
+  home.username = username;
+  home.homeDirectory = lib.mkForce "/Users/${username}";
+  home.stateVersion = "24.05";
   home.packages = [
     pkgs.ripgrep
     pkgs.joshuto
     pkgs.glow
-    pkgsUnstable.eza
-    pkgsUnstable.neovim
+    pkgs.eza
+    pkgs.plemoljp-nf
+    pkgs.neovim
     tex
-    duckgoFlake.x86_64-darwin.defaultPackage
   ];
   programs.home-manager = {
     enable = true;
@@ -77,12 +73,6 @@ in
       };
       window.opacity= 0.998; 
       window.decorations= "buttonless";
-
-      key_bindings=[
-        { key= "Yen";        chars= "\\x5C";                      }
-        { key= "Yen"; mods= "Alt";       chars= "\\xA5";          }
-      ];
-
       colors = {
         primary.background = "0x232136";
         primary.foreground = "0xe0def4";
@@ -97,13 +87,13 @@ in
         normal.white   = "0xe0def4";
         
         bright.black  = "0x47407d";
-        brith.red     = "0xf083a2";
-        brith.green   = "0xb1d196";
-        brith.yellow  = "0xf9cb8c";
-        brith.blue    = "0x65b1cd";
-        brith.magenta = "0xccb1ed";
-        brith.cyan    = "0xa6dae3";
-        brith.white   = "0xe2e0f7";
+        bright.red     = "0xf083a2";
+        bright.green   = "0xb1d196";
+        bright.yellow  = "0xf9cb8c";
+        bright.blue    = "0x65b1cd";
+        bright.magenta = "0xccb1ed";
+        bright.cyan    = "0xa6dae3";
+        bright.white   = "0xe2e0f7";
 
         indexed_colors=[
           { index= 16; color= "0xea9a97"; }
@@ -113,12 +103,6 @@ in
      };
   };
 
-  programs.starship = {
-    enable = true;
-    settings = {
-      add_newline = true;
-    };  
-  };
 
   programs.fzf = {
     enable = true;
@@ -132,6 +116,10 @@ in
   programs.zoxide = {
     enable = true;
     enableBashIntegration = true;
+    enableZshIntegration = true;
+  };
+  programs.starship = {
+    enable = true;
     enableZshIntegration = true;
   };
 
@@ -155,7 +143,9 @@ in
     bind -n M-c new-window -c "#{pane_current_path}"
     bind -T prefix n next-window
     bind -T prefix p previous-window
-
+    set -g status-justify absolute-centre
+    set -g status-position top
+    set -g status-interval 1
     # session の作成, 移動
     bind -T prefix C new-session
     bind -T prefix l switch-client -n
@@ -179,21 +169,6 @@ in
     set -g message-command-style "fg=#191726,bg=#cdcbe0"
     set -g pane-border-style "fg=#cdcbe0"
     set -g pane-active-border-style "fg=#569fba"
-    set -g status "on"
-    set -g status-justify "left"
-    set -g status-style "fg=#cdcbe0,bg=#191726"
-    set -g status-left-length "100"
-    set -g status-right-length "100"
-    set -g status-left-style NONE
-    set -g status-right-style NONE
-    set -g status-left "#[fg=#191726,bg=#569fba,bold] #S #[fg=#569fba,bg=#191726,nobold,nounderscore,noitalics]"
-    set -g status-right "#[fg=#191726,bg=#191726,nobold,nounderscore,noitalics]#[fg=#569fba,bg=#191726] #{prefix_highlight} #[fg=#cdcbe0,bg=#191726,nobold,nounderscore,noitalics]#[fg=#191726,bg=#cdcbe0] %Y-%m-%d  %I:%M %p #[fg=#569fba,bg=#cdcbe0,nobold,nounderscore,noitalics]#[fg=#191726,bg=#569fba,bold] #h "
-    setw -g window-status-activity-style "underscore,fg=#6e6a86,bg=#191726"
-    setw -g window-status-separator ""
-    setw -g window-status-style "NONE,fg=#6e6a86,bg=#191726"
-    setw -g window-status-format "#[fg=#191726,bg=#191726,nobold,nounderscore,noitalics]#[default] #I  #W #F #[fg=#191726,bg=#191726,nobold,nounderscore,noitalics]"
-    setw -g window-status-current-format "#[fg=#191726,bg=#cdcbe0,nobold,nounderscore,noitalics]#[fg=#191726,bg=#cdcbe0,bold] #I  #W #F #[fg=#cdcbe0,bg=#191726,nobold,nounderscore,noitalics]"
-
     bind -T prefix a choose-tree
     bind -T prefix e choose-session
     bind -T prefix w choose-tree -w
@@ -212,10 +187,9 @@ in
 
   programs.zsh = {
     enable = true;
-    completionInit = "autoload -U";
     defaultKeymap = "emacs";
     dotDir = ".config/zsh";
-    enableSyntaxHighlighting = true;
+    syntaxHighlighting.enable = true;
     initExtra = ''
     autoload -Uz edit-command-line
     zle -N edit-command-line
@@ -227,6 +201,9 @@ in
        if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then
          . ~/.nix-profile/etc/profile.d/nix.sh
        fi
+       export DARWIN_USER=$(whoami)
+       export DARWIN_HOST=$(hostname -s)
+
     '';
     profileExtra = ''
        if [ "$(uname -m)" = "arm64" ]; then
@@ -239,7 +216,7 @@ in
     '';
     history = {
       extended = true;
-      path = "${config.xdg.dataHome}/zsh/.zsh_history";
+      path = "${username}/.config/zsh/.zsh_history";
       save = 1000000;
       size = 1000000;
     };
