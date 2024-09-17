@@ -1,4 +1,43 @@
 [[plugins]]
+repo = 'creativenull/efmls-configs-nvim'
+on_event = ['CursorHold']
+hook_post_source = '''
+lua << EOF
+local eslint = require('efmls-configs.linters.eslint')
+local biome = require('efmls-configs.formatters.biome')
+local languages = {
+  typescript = { eslint, biome },
+  typescriptreact = {eslint, biome },
+}
+
+local efmls_config = {
+  filetypes = vim.tbl_keys(languages),
+  settings = {
+    languages = languages,
+  },
+  init_options = {
+    documentFormatting = true,
+    documentRangeFormatting = true,
+  },
+}
+require('lspconfig').efm.setup(vim.tbl_extend('force', efmls_config, {}))
+local lsp_fmt_group = vim.api.nvim_create_augroup('LspFormattingGroup', {})
+vim.api.nvim_create_autocmd('BufWritePost', {
+  group = lsp_fmt_group,
+  callback = function(ev)
+    local efm = vim.lsp.get_active_clients({ name = 'efm', bufnr = ev.buf })
+
+    if vim.tbl_isempty(efm) then
+      return
+    end
+
+    vim.lsp.buf.format({ name = 'efm' })
+  end,
+})
+EOF
+'''
+
+[[plugins]]
 repo = 'neovim/nvim-lspconfig'
 on_event = ['CursorHold']
 hook_post_source = '''
