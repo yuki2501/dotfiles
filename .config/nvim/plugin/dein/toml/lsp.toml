@@ -4,10 +4,10 @@ on_event = ['CursorHold']
 hook_post_source = '''
 lua << EOF
 local eslint = require('efmls-configs.linters.eslint')
-local biome = require('efmls-configs.formatters.biome')
+local prettier = require('efmls-configs.formatters.prettier')
 local languages = {
-  typescript = { eslint, biome },
-  typescriptreact = {eslint, biome },
+  typescript = { eslint, prettier },
+  typescriptreact = {eslint, prettier },
 }
 
 local efmls_config = {
