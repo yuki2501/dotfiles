@@ -25,13 +25,17 @@ in
     pkgs.eza
     pkgs.plemoljp-nf
     pkgs.neovim
-    pkgs.atuin
     tex
   ];
   programs.home-manager = {
     enable = true;
   };
 
+
+  programs.atuin = {
+    enable = true;
+    enableZshIntegration = true;
+  };
   programs.yt-dlp = {
     enable = true;
   }; 
