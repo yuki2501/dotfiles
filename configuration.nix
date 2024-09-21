@@ -100,6 +100,8 @@
       "lulu"
       "reikey"
       "ransomwhere"
+      "xld"
+      "iina"
     ];
   };
 }
