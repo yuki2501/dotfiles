@@ -25,6 +25,7 @@ in
     pkgs.eza
     pkgs.plemoljp-nf
     pkgs.neovim
+    pks.atuin
     tex
   ];
   programs.home-manager = {
