@@ -45,7 +45,6 @@ lua << EOF
 local lspconfig = require('lspconfig')
 local api = vim.api
 lspconfig.ocamllsp.setup{}
-lspconfig.rnix.setup{}
 lspconfig.texlab.setup{}
 lspconfig.ts_ls.setup{}
 
