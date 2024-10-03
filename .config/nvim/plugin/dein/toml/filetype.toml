@@ -25,6 +25,10 @@ repo = 'qnighy/satysfi.vim'
 on_ft = ['satysfi']
 
 [[plugins]]
+repo = 'vim-scripts/promela.vim'
+
+
+[[plugins]]
 repo = 'osyo-manga/vim-precious'
 depends = ['context_filetype.vim']
 on_source= ['context_filetype.vim']
