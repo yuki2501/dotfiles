@@ -21,16 +21,6 @@ colorscheme duskfox
 repo = 'folke/styler.nvim'
 on_lua = 'nightfox'
 
-[[plugins]]
-repo = 'nvim-lualine/lualine.nvim'
-on_event = ['BufRead','BufNewFile','BufReadPre']
-hook_post_source = '''
-lua << EOF
-require('lualine').setup {
-  options = {theme = 'horizon'}
-}
-EOF
-'''
 
 [[plugins]]
 repo = 'folke/todo-comments.nvim'
@@ -38,6 +28,19 @@ on_event = ['BufRead']
 hook_source = '''
 lua << EOF
   require('todo-comments').setup()
+EOF
+'''
+
+[[plugins]]
+repo = 'shortcuts/no-neck-pain.nvim'
+hook_post_source = '''
+lua << EOF
+require("no-neck-pain").setup({
+  autocmds = {
+    enableOnVimEnter = true,
+    enableOnTabEnter = true,
+  }
+})
 EOF
 '''
 
