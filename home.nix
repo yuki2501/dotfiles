@@ -23,8 +23,20 @@ in
     pkgs.joshuto
     pkgs.glow
     pkgs.eza
+    pkgs.spin
     pkgs.plemoljp-nf
     pkgs.neovim
+    pkgs.koka
+    pkgs.inetutils
+    pkgs.doxygen
+    pkgs.emacs
+    pkgs.python312Packages.compiledb
+    pkgs.jq
+    pkgs.man
+    pkgs.go
+    pkgs.nodejs_22
+    pkgs.rlwrap
+    pkgs.sqlite
     tex
   ];
   programs.home-manager = {
@@ -208,7 +220,9 @@ in
        fi
        export DARWIN_USER=$(whoami)
        export DARWIN_HOST=$(hostname -s)
-
+       export PATH="/usr/local/opt/openjdk/bin:$PATH"
+       export PATH="$PATH:$HOME/Library/Application Support/Coursier/bin"
+       export CPPFLAGS="-I/usr/local/opt/openjdk/include"
     '';
     profileExtra = ''
        if [ "$(uname -m)" = "arm64" ]; then
