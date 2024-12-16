@@ -56,6 +56,29 @@ vim.cmd[[" Look and Feel
 set colorcolumn=80
 set shell=/bin/zsh
 set cmdheight=0
+
+" 最下部のstatuslineを表示しない
+set laststatus=0
+
+" ファイル末尾以降の`~`の表示を削除
+set fillchars+=eob:\\x20
+
+" 縦区切り線をシンプルに
+set fillchars+=vert:│
+
+" 横区切り線をシンプルに
+set statusline=─
+set fillchars+=stl:─,stlnc:─
+
+" 区切り線のハイライトを抑え気味に
+highlight! link StatusLine Comment
+highlight! link StatusLineNC Comment
+if has('nvim')
+  highlight! link WinSeparator Comment
+else
+  highlight! link VertSplit Comment
+endif
+
 "set clipboard = unnamedplus
 nnoremap sj <C-w>j
 nnoremap sk <C-w>k
