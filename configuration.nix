@@ -102,6 +102,7 @@
       "ransomwhere"
       "xld"
       "iina"
+      "nikitabobko/tap/aerospace"
     ];
   };
 }
