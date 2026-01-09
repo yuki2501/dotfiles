@@ -17,40 +17,46 @@ in
   };
   home.username = username;
   home.homeDirectory = lib.mkForce "/Users/${username}";
-  home.stateVersion = "24.05";
-  home.packages = [
-    pkgs.ripgrep
-    pkgs.joshuto
-    pkgs.glow
-    pkgs.eza
-    pkgs.spin
-    pkgs.plemoljp-nf
-    pkgs.neovim
-    pkgs.koka
-    pkgs.inetutils
-    pkgs.doxygen
-    pkgs.emacs
-    pkgs.python312Packages.compiledb
-    pkgs.jq
-    pkgs.man
-    pkgs.go
-    pkgs.nodejs_22
-    pkgs.rlwrap
-    pkgs.sqlite
+  home.stateVersion = "25.05";
+  home.packages = with pkgs; [
+    ripgrep
+    joshuto
+    glow
+    eza
+    automake
+    poppler
+    plemoljp
+    plemoljp-nf
+    nerd-fonts.symbols-only
+    iosevka
+    # pkgs.neovim
+    koka
+    inetutils
+    doxygen
+    emacs
+    jq
+    man
+    go
+    nodejs_22
+    coq
+    rlwrap
+    sqlite
+    nuXmv
+    tree-sitter
+#    satysfi
+#    satyrographos
+    fcp
     tex
+    ghostscript
   ];
   programs.home-manager = {
     enable = true;
   };
 
 
-  programs.atuin = {
-    enable = true;
-    enableZshIntegration = true;
-  };
   programs.yt-dlp = {
     enable = true;
-  }; 
+  };
 
   programs.direnv = {
     enable = true;
@@ -88,7 +94,7 @@ in
          };
          size= 17.5;
       };
-      window.opacity= 0.998; 
+      window.opacity= 0.898;
       window.decorations= "buttonless";
       colors = {
         primary.background = "0x232136";
@@ -102,7 +108,7 @@ in
         normal.magenta = "0xc4a7e7";
         normal.cyan    = "0x9ccfd8";
         normal.white   = "0xe0def4";
-        
+
         bright.black  = "0x47407d";
         bright.red     = "0xf083a2";
         bright.green   = "0xb1d196";
@@ -117,6 +123,14 @@ in
           { index= 17; color= "0xeb98c3"; }
   	];
       };
+    terminal = {
+      shell.program = "${pkgs.zsh}/bin/zsh";
+      shell.args = [
+        "-l"
+        "-c"
+        "${pkgs.tmux}/bin/tmux a -t 0 || ${pkgs.tmux}/bin/tmux -u"
+      ];
+    };
      };
   };
 
@@ -198,7 +212,7 @@ in
     bind -T copy-mode-vi C-v send -X rectangle-toggle
 
     '';
-    
+
   };
 
 
@@ -207,10 +221,13 @@ in
     defaultKeymap = "emacs";
     dotDir = ".config/zsh";
     syntaxHighlighting.enable = true;
-    initExtra = ''
+    initContent = ''
     autoload -Uz edit-command-line
     zle -N edit-command-line
     bindkey "^O" edit-command-line
+    if command -v opam >/dev/null 2>&1; then
+      eval $(opam env)
+    fi
     '';
     envExtra = ''
        export NIX_PATH=$HOME/.nix-defexpr/channels
@@ -232,6 +249,8 @@ in
          eval "$(/usr/local/bin/brew shellenv)"
        fi
        export EDITOR=nvim
+       e () {emacsclient -nw "$@";}
+       eg () {emacsclient -c -n "$@";}
     '';
     history = {
       extended = true;
@@ -242,7 +261,7 @@ in
     shellAliases = {
       grep = "grep --colour=auto";
       c = "clear";
-      cp = "cp -i";
+      cp = "fcp";
       mv = "mv -i";
       rm = "rm -i";
       eza = "eza --all";
