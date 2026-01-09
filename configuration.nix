@@ -4,7 +4,7 @@
   environment.systemPackages = with pkgs; [
     vim
     git
-   
+
   ];
 
   # Nixデーモンの自動アップグレードを有効化
@@ -84,7 +84,7 @@
 
   # ターゲットプラットフォーム
   nixpkgs.hostPlatform = "x86_64-darwin";
-  
+
   homebrew = {
     enable = true;
     onActivation = {
@@ -92,6 +92,7 @@
     };
     brews = [
       "deno"
+      "FelixKratz/formulae/borders"
     ];
     casks = [
       "raycast"
@@ -103,6 +104,7 @@
       "xld"
       "iina"
       "nikitabobko/tap/aerospace"
+      "tla+-toolbox"
     ];
   };
 }
