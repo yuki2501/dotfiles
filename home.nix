@@ -1,10 +1,15 @@
 { pkgs, lib, neovim-nightly-overlay, ... }:
 let
-  tex = (pkgs.texlive.combine {
-    inherit (pkgs.texlive) scheme-basic
-    bussproofs latexmk collection-latexextra collection-langjapanese collection-fontsrecommended ;
-  });
-  username = "yuki_saito";
+  tex = 
+          (pkgs.texlive.combine {
+            inherit (pkgs.texlive)
+              scheme-basic
+              bussproofs latexmk collection-latexextra collection-langjapanese
+              collection-fontsrecommended biber biblatex algorithms algorithmicx
+              pgf listing faktor scalerel dashbox tensor xifthen mathtools
+              collection-luatex pbibtex-base mathpartir stmaryrd listingsutf8;
+          });
+  username = "yuki";
 in
 {
   nixpkgs = {
@@ -19,6 +24,7 @@ in
   home.homeDirectory = lib.mkForce "/Users/${username}";
   home.stateVersion = "25.05";
   home.packages = with pkgs; [
+    iina
     ripgrep
     joshuto
     glow
@@ -34,18 +40,20 @@ in
     inetutils
     doxygen
     emacs
+    ffmpeg
     jq
     man
     go
     nodejs_22
-    coq
+    claude-code
+    codex
+#    coq
     rlwrap
     sqlite
-    nuXmv
+#    nuXmv
     tree-sitter
 #    satysfi
 #    satyrographos
-    fcp
     tex
     ghostscript
   ];
@@ -261,7 +269,6 @@ in
     shellAliases = {
       grep = "grep --colour=auto";
       c = "clear";
-      cp = "fcp";
       mv = "mv -i";
       rm = "rm -i";
       eza = "eza --all";
