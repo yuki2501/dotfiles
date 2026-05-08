@@ -3,7 +3,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-darwin = {
-      url = "github:LnL7/nix-darwin/nix-darwin-25.11";
+      url = "github:LnL7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
@@ -14,8 +14,8 @@
   };
   outputs = { self, nixpkgs, nix-darwin, home-manager, neovim-nightly-overlay}:
     let
-      darwinUser = "yuki";
-      darwinHost = "yukimacmini";
+      darwinUser = "corald";
+      darwinHost = "coraldmbp";
       system = "aarch64-darwin";
       overlays = [
         neovim-nightly-overlay.overlays.default
