@@ -214,6 +214,9 @@
 
   (setq find-file-visit-truename t)
   (org-roam-db-autosync-mode 1)
+  (global-set-key (kbd "C-c n f") #'org-roam-node-find)
+  (global-set-key (kbd "C-c n i") #'org-roam-node-insert)
+  (global-set-key (kbd "C-c n c") #'org-roam-capture)
   (with-eval-after-load 'org-roam-dailies
     (global-set-key (kbd "C-c d") org-roam-dailies-map)))
 
